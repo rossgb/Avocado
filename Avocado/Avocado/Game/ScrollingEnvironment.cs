@@ -8,16 +8,20 @@ namespace Avocado
 {
 	public class ScrollingEnvironment
 	{
+		#region Fields
+
 		Texture2D texture;
 		Vector2[] positions;
 
 		int velocity;
 
+		#endregion
+
 		public ScrollingEnvironment(Texture2D texture, int velocity, int screenWidth)
-		{ 
+		{
 			this.texture = texture;
 			this.velocity = velocity;
-			this.positions = new Vector2[(int) Math.Ceiling((double) screenWidth / this.texture.Width) + 1];
+			this.positions = new Vector2[(int)Math.Ceiling((double)screenWidth / this.texture.Width) + 1];
 
 			for (int i = 0; i < this.positions.Length; i++)
 			{

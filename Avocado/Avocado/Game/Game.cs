@@ -5,8 +5,12 @@ namespace Avocado
 {
 	class AvocadoGame : Game
 	{
+		#region Fields
+
 		GraphicsDeviceManager graphics;
 		ScreenManager screenManager;
+
+		#endregion
 
 		public AvocadoGame()
 		{
@@ -18,7 +22,7 @@ namespace Avocado
 			this.graphics.PreferredBackBufferHeight = 768;
 
 			this.screenManager = new ScreenManager(this);
-			this.screenManager.AddScreen(new GameplayScreen(), null);
+			this.screenManager.AddScreen(new MainMenuScreen(), null);
 			this.Components.Add(screenManager);
 		}
 

@@ -14,6 +14,8 @@ namespace Avocado
 
 	public abstract class GameScreen
 	{
+		#region Fields
+
 		PlayerIndex? controllingPlayer;
 			
 		bool isExiting = false;
@@ -26,6 +28,10 @@ namespace Avocado
 		float transitionPosition = 1;
 		TimeSpan transitionOffTime = TimeSpan.Zero;
 		TimeSpan transitionOnTime = TimeSpan.Zero;
+
+		#endregion
+
+		#region Properties
 
 		public PlayerIndex? ControllingPlayer
 		{
@@ -88,6 +94,8 @@ namespace Avocado
 			get { return transitionPosition; }
 			protected set { transitionPosition = value; }
 		}
+
+		#endregion
 
 		public virtual void LoadContent() { }
 		public virtual void UnloadContent() { }

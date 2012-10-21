@@ -7,10 +7,15 @@ namespace Avocado
 {
 	public class InputState
 	{
+
+		#region Fields
+
 		public const int MaxInputs = 4;
 		public readonly GamePadState[] CurrentGamePadStates;
 		public readonly GamePadState[] LastGamePadStates;
 		public readonly bool[] GamePadWasConnected;
+
+		#endregion
 
 		public InputState()
 		{

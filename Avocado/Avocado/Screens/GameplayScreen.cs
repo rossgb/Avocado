@@ -9,6 +9,8 @@ namespace Avocado
 {
 	class GameplayScreen : GameScreen
 	{
+		#region Fields
+
 		ContentManager content;
 		ScrollingEnvironment background;
 		ScrollingEnvironment foreground;
@@ -17,6 +19,8 @@ namespace Avocado
 		int scrollVelocity;
 		
 		float pauseAlpha;
+
+		#endregion
 
 		public GameplayScreen()
 		{
@@ -69,8 +73,6 @@ namespace Avocado
 		{
 			if (input.IsPauseGame(null))
 			{
-				//this.ExitScreen();
-				this.ScreenManager.Game.Exit();
 			}
 		}
 	}

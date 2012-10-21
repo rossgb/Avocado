@@ -8,6 +8,8 @@ namespace Avocado
 {
 	public class ScreenManager : DrawableGameComponent
 	{
+		#region Fields
+
 		InputState input = new InputState();
 
 		List<GameScreen> screens = new List<GameScreen>();
@@ -19,6 +21,10 @@ namespace Avocado
 
 		bool isInitialized;
 		bool traceEnabled;
+
+		#endregion
+
+		#region Properties
 
 		public SpriteFont Font
 		{
@@ -35,6 +41,8 @@ namespace Avocado
 			get { return traceEnabled; }
 			set { traceEnabled = value; }
 		}
+
+		#endregion
 
 		public ScreenManager(Game game)
 			: base(game)
