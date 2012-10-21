@@ -11,12 +11,15 @@ namespace Avocado
 		public AvocadoGame()
 		{
 			this.Content.RootDirectory = "Content";
-			this.graphics = new GraphicsDeviceManager(this);
-			//this.graphics.IsFullScreen = true;
 			
+			this.graphics = new GraphicsDeviceManager(this);
+			this.graphics.IsFullScreen = true;
+			this.graphics.PreferredBackBufferWidth = 2048;
+			this.graphics.PreferredBackBufferHeight = 768;
+
 			this.screenManager = new ScreenManager(this);
+			this.screenManager.AddScreen(new GameplayScreen(), null);
 			this.Components.Add(screenManager);
-			this.screenManager.AddScreen(new GameplayScreen(this.Content), null);
 		}
 
 		protected override void Draw(GameTime gameTime)

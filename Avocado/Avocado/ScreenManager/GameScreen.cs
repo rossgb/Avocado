@@ -103,7 +103,7 @@ namespace Avocado
 
 				if (!this.UpdateTransition(gameTime, this.transitionOffTime, 1))
 				{
-					ScreenManager.RemoveScreen(this);
+					this.screenManager.RemoveScreen(this);
 				}
 			}
 			else if (coveredByOtherScreen)

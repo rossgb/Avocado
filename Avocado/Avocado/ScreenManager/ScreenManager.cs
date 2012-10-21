@@ -68,6 +68,8 @@ namespace Avocado
 			{
 				screen.UnloadContent();
 			}
+
+			base.UnloadContent();
 		}
 
 		public override void Update(GameTime gameTime)
@@ -127,8 +129,10 @@ namespace Avocado
         {
             foreach (GameScreen screen in screens)
             {
-                if (screen.ScreenState == ScreenState.Hidden)
-                    continue;
+				if (screen.ScreenState == ScreenState.Hidden)
+				{
+					continue;
+				}
 
                 screen.Draw(gameTime);
             }

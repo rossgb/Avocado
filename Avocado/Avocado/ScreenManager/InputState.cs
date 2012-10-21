@@ -24,7 +24,7 @@ namespace Avocado
 			for (int i = 0; i < MaxInputs; i++)
 			{
 				LastGamePadStates[i] = CurrentGamePadStates[i];
-				CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex)i);
+				CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex) i);
 
 				if (CurrentGamePadStates[i].IsConnected)
 				{
@@ -40,7 +40,7 @@ namespace Avocado
 				playerIndex = controllingPlayer.Value;
 
 				int i = (int)playerIndex;
-
+				
 				return (CurrentGamePadStates[i].IsButtonDown(button) && 
 					LastGamePadStates[i].IsButtonUp(button));
 			}

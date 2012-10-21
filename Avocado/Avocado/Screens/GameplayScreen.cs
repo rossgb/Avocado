@@ -3,27 +3,45 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Avocado
 {
 	class GameplayScreen : GameScreen
 	{
 		ContentManager content;
-		Environment environment;
+		ScrollingEnvironment background;
+		ScrollingEnvironment foreground;
 
+		// pixels per second
+		int scrollVelocity;
+		
 		float pauseAlpha;
 
-		public GameplayScreen(ContentManager content)
+		public GameplayScreen()
 		{
-			this.content = content;
+			// TODO: customize levels, possibly parse textfiles specify level content, scrollVelocity, etc...
+			this.scrollVelocity = 200;
 		}
 
 		public override void LoadContent()
 		{
-			this.environment = new Environment(
-				this.content.Load<Texture2D>("Environment/background"), 
-				this.content.Load<Texture2D>("Environment/foreground"), 
-				-1, -2, this.ScreenManager.GraphicsDevice.Viewport.Width);
+			if (this.content == null)
+			{
+				this.content = new ContentManager(this.ScreenManager.Game.Services, "Content");
+			}
+
+			this.background = new ScrollingEnvironment(
+				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
+				this.ScreenManager.GraphicsDevice.Viewport.Width);
+			this.foreground = new ScrollingEnvironment(
+				this.content.Load<Texture2D>("Environment/foreground"), this.scrollVelocity * 2,
+				this.ScreenManager.GraphicsDevice.Viewport.Width);
+		}
+
+		public override void UnloadContent()
+		{
+			this.content.Unload();
 		}
 
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
@@ -36,16 +54,23 @@ namespace Avocado
 
 			if (this.IsActive)
 			{
-				this.environment.Update(gameTime);
+				this.background.Update(gameTime);
+				this.foreground.Update(gameTime);
 			}
+		}
+
+		public override void Draw(GameTime gameTime)
+		{
+			this.background.Draw(this.ScreenManager.SpriteBatch);
+			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 		}
 
 		public override void HandleInput(InputState input)
 		{
-			input.Update();
-
 			if (input.IsPauseGame(null))
 			{
+				//this.ExitScreen();
+				this.ScreenManager.Game.Exit();
 			}
 		}
 	}
