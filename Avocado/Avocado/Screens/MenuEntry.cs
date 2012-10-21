@@ -8,6 +8,7 @@ namespace Avocado
 	{
 		#region Fields
 
+		Color selectedColor;
 		Vector2 position;
 		float selectionFade;
 		string text;
@@ -46,8 +47,9 @@ namespace Avocado
 
 		#region Initialization
 
-		public MenuEntry(string text)
+		public MenuEntry(string text, Color selectedColor)
 		{
+			this.selectedColor = selectedColor;
 			this.text = text;
 		}
 
@@ -71,7 +73,7 @@ namespace Avocado
 
 		public virtual void Draw(MenuScreen screen, bool isSelected, GameTime gameTime)
 		{
-			Color color = isSelected ? Color.Yellow : Color.White;
+			Color color = isSelected ? this.selectedColor : Color.White;
 			color *= screen.TransitionAlpha;
 			
 			float pulsate = (float) Math.Sin(gameTime.TotalGameTime.TotalSeconds * 6) + 1;

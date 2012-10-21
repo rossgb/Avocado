@@ -22,9 +22,9 @@ namespace Avocado
 			this.graphics.PreferredBackBufferHeight = 768;
 
 			this.screenManager = new ScreenManager(this);
+			this.Components.Add(screenManager);
 			this.screenManager.AddScreen(new MainMenuScreen(), null);
 			//this.screenManager.AddScreen(new GameplayScreen(), null);
-			this.Components.Add(screenManager);
 		}
 
 		protected override void Draw(GameTime gameTime)

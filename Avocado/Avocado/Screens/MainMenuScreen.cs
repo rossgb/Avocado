@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,6 +12,8 @@ namespace Avocado
 		ContentManager content;
 		ScrollingEnvironment background;
 		ScrollingEnvironment foreground;
+		Texture2D menuBackdrop;
+		Rectangle menuBackdropArea;
 		int scrollVelocity;
 
 		#endregion
@@ -22,8 +25,8 @@ namespace Avocado
 		{
 			this.scrollVelocity = 300;
 
-			MenuEntry playGameMenuEntry = new MenuEntry("PLAY");
-			MenuEntry quitMenuEntry = new MenuEntry("QUIT");
+			MenuEntry playGameMenuEntry = new MenuEntry("PLAY", Color.YellowGreen);
+			MenuEntry quitMenuEntry = new MenuEntry("QUIT", Color.YellowGreen);
 
 			playGameMenuEntry.Selected += this.PlayGameMenuEntrySelected;
 			quitMenuEntry.Selected += this.OnCancel;
@@ -45,6 +48,13 @@ namespace Avocado
 			this.foreground = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/foreground"), this.scrollVelocity * 2,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
+			this.menuBackdrop = new Texture2D(this.ScreenManager.GraphicsDevice, 1, 1);
+			this.menuBackdrop.SetData(new[] { Color.Black });
+			this.menuBackdropArea = new Rectangle(
+				this.ScreenManager.GraphicsDevice.Viewport.Width / 8, 0,
+				this.ScreenManager.GraphicsDevice.Viewport.Width / 4, 
+				this.ScreenManager.GraphicsDevice.Viewport.Height);
+			//this.menuBackdropArea.X -= this.menuBackdropArea.Width / 2;
 		}
 
 		public override void UnloadContent()
@@ -81,6 +91,7 @@ namespace Avocado
 		{
 			this.ScreenManager.SpriteBatch.Begin();
 			this.background.Draw(this.ScreenManager.SpriteBatch);
+			this.ScreenManager.SpriteBatch.Draw(this.menuBackdrop, this.menuBackdropArea, Color.White * 0.5f);
 			base.Draw(gameTime);
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 			this.ScreenManager.SpriteBatch.End();

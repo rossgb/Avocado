@@ -80,7 +80,7 @@ namespace Avocado
 
 			foreach (MenuEntry menuEntry in this.menuEntries)
 			{
-				position.X = this.ScreenManager.GraphicsDevice.Viewport.Width / 2 - menuEntry.GetWidth(this) / 2;
+				position.X = this.ScreenManager.GraphicsDevice.Viewport.Width / 4 - menuEntry.GetWidth(this) / 2;
 
 				if (this.ScreenState == ScreenState.TransitionOn)
 				{
@@ -118,7 +118,7 @@ namespace Avocado
 			}
 
 			float transitionOffset = (float) Math.Pow(this.TransitionPosition, 2);
-			Vector2 titlePosition = new Vector2(this.ScreenManager.GraphicsDevice.Viewport.Width / 2,
+			Vector2 titlePosition = new Vector2(this.ScreenManager.GraphicsDevice.Viewport.Width / 4,
 				this.ScreenManager.GraphicsDevice.Viewport.Height / 3 - transitionOffset * 100);
 			Vector2 titleOrigin = this.ScreenManager.Font.MeasureString(menuTitle) / 2;
 			Color titleColor = Color.White * this.TransitionAlpha;
