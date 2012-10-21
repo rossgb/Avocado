@@ -83,8 +83,9 @@ namespace Avocado
 			bool coveredByOtherScreen = false;
 			bool otherScreenHasFocus = !Game.IsActive;
 
-			for (int i = this.screensToUpdate.Count; i > 0; --i)
+			while (this.screensToUpdate.Count > 0)
 			{
+				int i = this.screensToUpdate.Count - 1;
 				GameScreen screen = this.screensToUpdate[i];
 				this.screensToUpdate.RemoveAt(i);
 
