@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -16,6 +17,8 @@ namespace Avocado
 		ScrollingEnvironment foreground;
 		int scrollVelocity;
 		float pauseAlpha;
+		List<Player> players;
+		List<Enemy> enemies;
 
 		#endregion
 
@@ -37,6 +40,9 @@ namespace Avocado
 			{
 				this.content = new ContentManager(this.ScreenManager.Game.Services, "Content");
 			}
+
+			this.players = new List<Player>();
+			this.enemies = new List<Enemy>();
 
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
@@ -78,6 +84,11 @@ namespace Avocado
 			{
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
+
+				for (int i = 0; i < players.Count; i++)
+				{
+					players[i].Update(gameTime);
+				}
 			}
 		}
 

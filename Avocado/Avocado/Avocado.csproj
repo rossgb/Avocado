@@ -107,8 +107,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ScreenManager\Entity.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
     <Compile Include="ScreenManager\InputState.cs" />
+    <Compile Include="ScreenManager\Player.cs" />
     <Compile Include="ScreenManager\ScreenManager.cs" />
     <Compile Include="Game\ScrollingEnvironment.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
