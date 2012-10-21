@@ -1,0 +1,11 @@
+H:\GameDev\Avocado\Avocado\Avocado\bin\x86\Debug\Avocado.exe
+H:\GameDev\Avocado\Avocado\Avocado\bin\x86\Debug\Avocado.pdb
+H:\GameDev\Avocado\Avocado\Avocado\obj\x86\Debug\ResolveAssemblyReference.cache
+H:\GameDev\Avocado\Avocado\Avocado\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+H:\GameDev\Avocado\Avocado\Avocado\obj\x86\Debug\Avocado.exe
+H:\GameDev\Avocado\Avocado\Avocado\obj\x86\Debug\Avocado.pdb
+H:\GameDev\Avocado\Avocado\Avocado\bin\x86\Debug\Content\background.xnb
+H:\GameDev\Avocado\Avocado\Avocado\bin\x86\Debug\Content\blank.xnb
+H:\GameDev\Avocado\Avocado\Avocado\bin\x86\Debug\Content\gradient.xnb
+H:\GameDev\Avocado\Avocado\Avocado\bin\x86\Debug\Content\gamefont.xnb
+H:\GameDev\Avocado\Avocado\Avocado\bin\x86\Debug\Content\menufont.xnb
