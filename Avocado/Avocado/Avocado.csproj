@@ -107,10 +107,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ScreenManager\Entity.cs" />
+    <Compile Include="Entity\Enemy.cs" />
+    <Compile Include="Entity\Entity.cs" />
     <Compile Include="ScreenManager\GameScreen.cs" />
     <Compile Include="ScreenManager\InputState.cs" />
-    <Compile Include="ScreenManager\Player.cs" />
+    <Compile Include="Entity\Player.cs" />
     <Compile Include="ScreenManager\ScreenManager.cs" />
     <Compile Include="Game\ScrollingEnvironment.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
