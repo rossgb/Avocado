@@ -1,7 +1,9 @@
 *.swp
 *.suo
-*/bin/*
-*/obj/*
+Avocado/Avocado/bin
+Avocado/Avocado/obj
+Avocado/AvocadoContent/bin
+Avocado/AvocadoContent/obj
 *.chachefile
 *.Debug.cachefile
 *.ccgame
