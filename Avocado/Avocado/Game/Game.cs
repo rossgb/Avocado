@@ -23,6 +23,7 @@ namespace Avocado
 
 			this.screenManager = new ScreenManager(this);
 			this.screenManager.AddScreen(new MainMenuScreen(), null);
+			//this.screenManager.AddScreen(new GameplayScreen(), null);
 			this.Components.Add(screenManager);
 		}
 

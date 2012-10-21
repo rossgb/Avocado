@@ -14,13 +14,16 @@ namespace Avocado
 		ContentManager content;
 		ScrollingEnvironment background;
 		ScrollingEnvironment foreground;
-
-		// pixels per second
 		int scrollVelocity;
-		
 		float pauseAlpha;
 
 		#endregion
+
+		#region Properties
+		
+		#endregion
+
+		#region Initialization
 
 		public GameplayScreen()
 		{
@@ -48,11 +51,26 @@ namespace Avocado
 			this.content.Unload();
 		}
 
+		#endregion
+
+		#region Handle Input
+
+		public override void HandleInput(InputState input)
+		{
+			if (input.IsPauseGame(null))
+			{
+			}
+		}
+
+		#endregion
+
+		#region Update and Draw
+
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
 		{
 			base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
-			this.pauseAlpha = coveredByOtherScreen ? 
+			this.pauseAlpha = coveredByOtherScreen ?
 				Math.Min(this.pauseAlpha + 1.0f / 32, 1) :
 				Math.Max(this.pauseAlpha - 1.0f / 32, 0);
 
@@ -65,15 +83,12 @@ namespace Avocado
 
 		public override void Draw(GameTime gameTime)
 		{
+			this.ScreenManager.SpriteBatch.Begin();
 			this.background.Draw(this.ScreenManager.SpriteBatch);
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
+			this.ScreenManager.SpriteBatch.End();
 		}
 
-		public override void HandleInput(InputState input)
-		{
-			if (input.IsPauseGame(null))
-			{
-			}
-		}
+		#endregion
 	}
 }

@@ -50,14 +50,10 @@ namespace Avocado
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Begin();
-
 			for (int i = 0; i < this.positions.Length; i++)
 			{
 				spriteBatch.Draw(this.texture, this.positions[i], Color.White);
 			}
-
-			spriteBatch.End();
 		}
 	}
 }

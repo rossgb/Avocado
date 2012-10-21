@@ -80,7 +80,7 @@ namespace Avocado
 			SpriteFont font = screen.ScreenManager.Font;
 			Vector2 origin = new Vector2(0, font.LineSpacing / 2);
 
-			screen.ScreenManager.SpriteBatch.DrawString(font, this.text, position, color, 
+			screen.ScreenManager.SpriteBatch.DrawString(font, this.text, this.position, color, 
 				0, origin, scale, SpriteEffects.None, 0);
 		}
 

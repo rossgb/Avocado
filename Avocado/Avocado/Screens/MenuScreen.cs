@@ -76,7 +76,7 @@ namespace Avocado
 		protected virtual void UpdateMenuEntryLocations()
 		{
 			float transitionOffset = (float)Math.Pow(this.TransitionPosition, 2);
-			Vector2 position = new Vector2(0.0f, 175.0f);
+			Vector2 position = new Vector2(0.0f, this.ScreenManager.GraphicsDevice.Viewport.Height / 2);
 
 			foreach (MenuEntry menuEntry in this.menuEntries)
 			{
@@ -111,8 +111,6 @@ namespace Avocado
 		{
 			this.UpdateMenuEntryLocations();
 
-			this.ScreenManager.SpriteBatch.Begin();
-
 			for (int i = 0; i < this.menuEntries.Count; i++)
 			{
 				bool isSelected = this.IsActive && (i == this.selectedEntry);
@@ -120,14 +118,13 @@ namespace Avocado
 			}
 
 			float transitionOffset = (float) Math.Pow(this.TransitionPosition, 2);
-			Vector2 titlePosition = new Vector2(this.ScreenManager.GraphicsDevice.Viewport.Width / 2, 80 - transitionOffset * 100);
+			Vector2 titlePosition = new Vector2(this.ScreenManager.GraphicsDevice.Viewport.Width / 2,
+				this.ScreenManager.GraphicsDevice.Viewport.Height / 3 - transitionOffset * 100);
 			Vector2 titleOrigin = this.ScreenManager.Font.MeasureString(menuTitle) / 2;
 			Color titleColor = Color.White * this.TransitionAlpha;
 
 			this.ScreenManager.SpriteBatch.DrawString(this.ScreenManager.Font, this.menuTitle, 
-				titlePosition, titleColor, 0, titleOrigin, 1.25f, SpriteEffects.None, 0);
-
-			this.ScreenManager.SpriteBatch.End();
+				titlePosition, titleColor, 0, titleOrigin, 2.0f, SpriteEffects.None, 0);
 		}
 	}
 }
