@@ -42,7 +42,9 @@ namespace Avocado
 			}
 
 			this.players = new List<Player>();
-			this.enemies = new List<Enemy>();
+			players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 10, 100));
+			players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 10, 100));
+			this.enemies = new List<Enemy>(); //needs to be filled with a factory
 
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
@@ -65,6 +67,11 @@ namespace Avocado
 		{
 			if (input.IsPauseGame(null))
 			{
+			}
+
+			for (int i = 0; i < players.Count; i++)
+			{
+				players[i].HandleInput(input,i);
 			}
 		}
 
@@ -89,6 +96,11 @@ namespace Avocado
 				{
 					players[i].Update(gameTime);
 				}
+
+				for (int i = 0; i < enemies.Count; i++)
+				{
+					enemies[i].Update(gameTime);
+				}
 			}
 		}
 
@@ -98,6 +110,16 @@ namespace Avocado
 			this.background.Draw(this.ScreenManager.SpriteBatch);
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 			this.ScreenManager.SpriteBatch.End();
+
+			for (int i = 0; i < players.Count; i++)
+			{
+				players[i].Draw(this.ScreenManager.SpriteBatch);
+			}
+
+			for (int i = 0; i < enemies.Count; i++)
+			{
+				enemies[i].Draw(this.ScreenManager.SpriteBatch);
+			}
 		}
 
 		#endregion

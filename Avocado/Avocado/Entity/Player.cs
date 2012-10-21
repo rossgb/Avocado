@@ -31,10 +31,10 @@ namespace Avocado
             base.Draw(spriteBatch);
         }
 
-        public void HandleInput(InputState input)
+        public void HandleInput(InputState input, int index)
         {
-			this.position.X += input.CurrentGamePadStates[0].ThumbSticks.Left.X * this.velocity;
-			this.position.Y += input.CurrentGamePadStates[0].ThumbSticks.Left.Y * this.velocity;
+			this.position.X += input.CurrentGamePadStates[index].ThumbSticks.Left.X * this.velocity;
+			this.position.Y += input.CurrentGamePadStates[index].ThumbSticks.Left.Y * this.velocity;
 
 
         }
