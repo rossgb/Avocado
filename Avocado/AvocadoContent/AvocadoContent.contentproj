@@ -71,12 +71,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Background\background.png">
+    <Compile Include="Environment\background.png">
       <Name>background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Background\foreground.png">
+    <Compile Include="Environment\foreground.png">
       <Name>foreground</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>

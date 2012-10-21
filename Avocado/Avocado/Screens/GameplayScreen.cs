@@ -21,8 +21,8 @@ namespace Avocado
 		public override void LoadContent()
 		{
 			this.environment = new Environment(
-				this.content.Load<Texture2D>("Background/background"), 
-				this.content.Load<Texture2D>("Background/foreground"), 
+				this.content.Load<Texture2D>("Environment/background"), 
+				this.content.Load<Texture2D>("Environment/foreground"), 
 				-1, -2, this.ScreenManager.GraphicsDevice.Viewport.Width);
 		}
 
@@ -44,11 +44,8 @@ namespace Avocado
 		{
 			input.Update();
 
-
-
 			if (input.IsPauseGame(null))
 			{
-				this.ExitScreen();
 			}
 		}
 	}
