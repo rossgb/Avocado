@@ -76,8 +76,6 @@ namespace Avocado
 			{
 				screen.UnloadContent();
 			}
-
-			base.UnloadContent();
 		}
 
 		public override void Update(GameTime gameTime)
@@ -100,7 +98,7 @@ namespace Avocado
 				this.screensToUpdate.RemoveAt(i);
 
 				screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-
+				
 				if (screen.ScreenState == ScreenState.TransitionOn ||
 					screen.ScreenState == ScreenState.Active)
 				{
@@ -174,8 +172,8 @@ namespace Avocado
         public GameScreen[] GetScreens()
         {
             return this.screens.ToArray();
-        }
-
+        } 
+		
         public void FadeBackBufferToBlack(float alpha)
         {
             Viewport viewport = GraphicsDevice.Viewport;

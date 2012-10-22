@@ -26,7 +26,6 @@ namespace Avocado
 			
 			// begin game at main menu
 			this.screenManager.AddScreen(new MainMenuScreen(), null);
-			//this.screenManager.AddScreen(new GameplayScreen(), null);
 		}
 
 		protected override void Draw(GameTime gameTime)

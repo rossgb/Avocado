@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,8 +11,8 @@ namespace Avocado
 	{
 		int health;
 
-		public Player(Texture2D texture, int velocity, int health) : 
-			base(texture, velocity)
+		public Player(Texture2D texture, int health, int speed) : 
+			base(texture, speed)
 		{
 			this.health = health;
 		}
@@ -28,8 +29,8 @@ namespace Avocado
 
 		public void HandleInput(InputState input, int index)
 		{
-			this.Position.X += input.CurrentGamePadStates[index].ThumbSticks.Left.X * this.velocity;
-			this.Position.Y -= input.CurrentGamePadStates[index].ThumbSticks.Left.Y * this.velocity;
+			this.Direction = input.CurrentGamePadStates[index].ThumbSticks.Left;
+			this.Direction.Y *= -1;
 		}
 	}
 }

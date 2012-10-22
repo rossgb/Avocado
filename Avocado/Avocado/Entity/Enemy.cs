@@ -6,13 +6,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Avocado
 {
-
 	public class Enemy : Entity
 	{
 		int health;
 
-		public Enemy(Texture2D texture, int velocity, int health) : 
-			base(texture, velocity)
+		public Enemy(Texture2D texture, int health, int speed) : 
+			base(texture, speed)
 		{
 			this.health = health;
 		}

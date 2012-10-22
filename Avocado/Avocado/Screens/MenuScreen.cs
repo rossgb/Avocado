@@ -28,8 +28,8 @@ namespace Avocado
 		public MenuScreen(string menuTitle)
 		{
 			this.menuTitle = menuTitle;
-			this.TransitionOffTime = TimeSpan.FromSeconds(0.5);
-			this.TransitionOnTime = TimeSpan.FromSeconds(0.5);
+			this.TransitionOffTime = TimeSpan.FromSeconds(0.5f);
+			this.TransitionOnTime = TimeSpan.FromSeconds(0.5f);
 		}
 
 		public override void HandleInput(InputState input)
@@ -84,7 +84,7 @@ namespace Avocado
 
 				if (this.ScreenState == ScreenState.TransitionOn)
 				{
-					position.Y -= transitionOffset * 256;
+					position.Y += transitionOffset * 256;
 				}
 				else
 				{

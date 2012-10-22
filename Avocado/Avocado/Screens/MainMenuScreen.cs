@@ -25,8 +25,8 @@ namespace Avocado
 		{
 			this.scrollVelocity = 300;
 
-			MenuEntry playGameMenuEntry = new MenuEntry("PLAY", Color.YellowGreen);
-			MenuEntry quitMenuEntry = new MenuEntry("QUIT", Color.YellowGreen);
+			MenuEntry playGameMenuEntry = new MenuEntry("PLAY");
+			MenuEntry quitMenuEntry = new MenuEntry("QUIT");
 
 			playGameMenuEntry.Selected += this.PlayGameMenuEntrySelected;
 			quitMenuEntry.Selected += this.OnCancel;
@@ -54,7 +54,6 @@ namespace Avocado
 				this.ScreenManager.GraphicsDevice.Viewport.Width / 8, 0,
 				this.ScreenManager.GraphicsDevice.Viewport.Width / 4, 
 				this.ScreenManager.GraphicsDevice.Viewport.Height);
-			//this.menuBackdropArea.X -= this.menuBackdropArea.Width / 2;
 		}
 
 		public override void UnloadContent()
@@ -68,7 +67,7 @@ namespace Avocado
 
 		void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
 		{
-			LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreen());
+			LoadingScreen.Load(ScreenManager, false, e.PlayerIndex, new GameplayScreen());
 		}
 
 		protected override void OnCancel(PlayerIndex playerIndex)

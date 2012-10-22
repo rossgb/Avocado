@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace Avocado
@@ -25,7 +26,7 @@ namespace Avocado
 		ScreenManager screenManager;
 		ScreenState screenState = ScreenState.TransitionOn;
 
-		float transitionPosition = 1;
+		float transitionPosition = 1.0f;
 		TimeSpan transitionOffTime = TimeSpan.Zero;
 		TimeSpan transitionOnTime = TimeSpan.Zero;
 
@@ -74,7 +75,7 @@ namespace Avocado
 
 		public float TransitionAlpha
 		{
-			get { return 1f - TransitionPosition; }
+			get { return 1.0f - TransitionPosition; }
 		}
 
 		public TimeSpan TransitionOffTime
