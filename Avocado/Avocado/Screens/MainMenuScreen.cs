@@ -68,7 +68,7 @@ namespace Avocado
 
 		void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
 		{
-			// load screen!
+			LoadingScreen.Load(ScreenManager, true, e.PlayerIndex, new GameplayScreen());
 		}
 
 		protected override void OnCancel(PlayerIndex playerIndex)

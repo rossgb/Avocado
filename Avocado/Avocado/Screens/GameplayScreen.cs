@@ -18,12 +18,8 @@ namespace Avocado
 		int scrollVelocity;
 		float pauseAlpha;
 		List<Player> players;
-		List<Enemy> enemies;
+		//List<Enemy> enemies;
 
-		#endregion
-
-		#region Properties
-		
 		#endregion
 
 		#region Initialization
@@ -42,10 +38,10 @@ namespace Avocado
 			}
 
 			this.players = new List<Player>();
-			players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 10, 100));
-			players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 10, 100));
-			this.enemies = new List<Enemy>(); //needs to be filled with a factory
-
+			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 10, 100));
+			
+			//this.enemies = new List<Enemy>(); //needs to be filled with a factory
+			
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
@@ -67,11 +63,12 @@ namespace Avocado
 		{
 			if (input.IsPauseGame(null))
 			{
+				this.ScreenManager.Game.Exit();
 			}
 
-			for (int i = 0; i < players.Count; i++)
+			for (int i = 0; i < this.players.Count; i++)
 			{
-				players[i].HandleInput(input,i);
+				this.players[i].HandleInput(input, i);
 			}
 		}
 
@@ -92,14 +89,14 @@ namespace Avocado
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
 
-				for (int i = 0; i < players.Count; i++)
+				foreach (Player player in this.players)
 				{
-					players[i].Update(gameTime);
+					player.Position.X -= this.scrollVelocity * gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
 				}
 
-				for (int i = 0; i < enemies.Count; i++)
+				foreach (Player player in this.players)
 				{
-					enemies[i].Update(gameTime);
+					player.Update(gameTime);
 				}
 			}
 		}
@@ -108,18 +105,14 @@ namespace Avocado
 		{
 			this.ScreenManager.SpriteBatch.Begin();
 			this.background.Draw(this.ScreenManager.SpriteBatch);
+
+			foreach (Player player in this.players)
+			{
+				player.Draw(this.ScreenManager.SpriteBatch);
+			}
+
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 			this.ScreenManager.SpriteBatch.End();
-
-			for (int i = 0; i < players.Count; i++)
-			{
-				players[i].Draw(this.ScreenManager.SpriteBatch);
-			}
-
-			for (int i = 0; i < enemies.Count; i++)
-			{
-				enemies[i].Draw(this.ScreenManager.SpriteBatch);
-			}
 		}
 
 		#endregion

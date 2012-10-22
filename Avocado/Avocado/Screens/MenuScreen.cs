@@ -84,11 +84,11 @@ namespace Avocado
 
 				if (this.ScreenState == ScreenState.TransitionOn)
 				{
-					position.X -= transitionOffset * 256;
+					position.Y -= transitionOffset * 256;
 				}
 				else
 				{
-					position.X += transitionOffset * 512;
+					position.Y += transitionOffset * 512;
 				}
 
 				menuEntry.Position = position;
