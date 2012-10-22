@@ -8,41 +8,41 @@ namespace Avocado
 {
 	public class ScreenManager : DrawableGameComponent
 	{
-		#region Fields
+											#region Fields
 
-		InputState input = new InputState();
+	InputState input = new InputState();
 
-		List<GameScreen> screens = new List<GameScreen>();
-		List<GameScreen> screensToUpdate = new List<GameScreen>();
+	List<GameScreen> screens = new List<GameScreen>();
+	List<GameScreen> screensToUpdate = new List<GameScreen>();
 
-		Texture2D blankTexture;
-		SpriteFont font;
-		SpriteBatch spriteBatch;
+	Texture2D blankTexture;
+	SpriteFont font;
+	SpriteBatch spriteBatch;
 
-		bool isInitialized;
-		bool traceEnabled;
+	bool isInitialized;
+	bool traceEnabled;
 
-		#endregion
+	#endregion
 
-		#region Properties
+																#region Properties
 
-		public SpriteFont Font
-		{
-			get { return font; }
-		}
+	public SpriteFont Font
+	{
+		get { return font; }
+	}
 
-		public SpriteBatch SpriteBatch
-		{
-			get { return spriteBatch; }
-		}
+	public SpriteBatch SpriteBatch
+	{
+		get { return spriteBatch; }
+	}
 
-		public bool TraceEnabled
-		{
-			get { return traceEnabled; }
-			set { traceEnabled = value; }
-		}
+	public bool TraceEnabled
+	{
+		get { return traceEnabled; }
+		set { traceEnabled = value; }
+	}
 
-		#endregion
+	#endregion
 
 		public ScreenManager(Game game)
 			: base(game)
@@ -122,66 +122,66 @@ namespace Avocado
 		}
 
 		void TraceScreens()
-        {
-            List<string> screenNames = new List<string>();
+		{
+			List<string> screenNames = new List<string>();
 
-            foreach (GameScreen screen in screens)
-                screenNames.Add(screen.GetType().Name);
+			foreach (GameScreen screen in screens)
+				screenNames.Add(screen.GetType().Name);
 
-            Debug.WriteLine(string.Join(", ", screenNames.ToArray()));
-        }
+			Debug.WriteLine(string.Join(", ", screenNames.ToArray()));
+		}
 
-        public override void Draw(GameTime gameTime)
-        {
-            foreach (GameScreen screen in screens)
-            {
+		public override void Draw(GameTime gameTime)
+		{
+			foreach (GameScreen screen in screens)
+			{
 				if (screen.ScreenState == ScreenState.Hidden)
 				{
 					continue;
 				}
 
-                screen.Draw(gameTime);
-            }
-        }
+				screen.Draw(gameTime);
+			}
+		}
 
-        public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer)
-        {
-            screen.ControllingPlayer = controllingPlayer;
+		public void AddScreen(GameScreen screen, PlayerIndex? controllingPlayer)
+		{
+			screen.ControllingPlayer = controllingPlayer;
 			screen.IsExiting = false;
 			screen.ScreenManager = this;
 
-            if (this.isInitialized)
-            {
-                screen.LoadContent();
-            }
+			if (this.isInitialized)
+			{
+				screen.LoadContent();
+			}
 
-            this.screens.Add(screen);
-        }
+			this.screens.Add(screen);
+		}
 
-        public void RemoveScreen(GameScreen screen)
-        {
-            if (this.isInitialized)
-            {
-                screen.UnloadContent();
-            }
+		public void RemoveScreen(GameScreen screen)
+		{
+			if (this.isInitialized)
+			{
+				screen.UnloadContent();
+			}
 
-            this.screens.Remove(screen);
-            this.screensToUpdate.Remove(screen);
-        }
+			this.screens.Remove(screen);
+			this.screensToUpdate.Remove(screen);
+		}
 
-        public GameScreen[] GetScreens()
-        {
-            return this.screens.ToArray();
-        } 
+		public GameScreen[] GetScreens()
+		{
+			return this.screens.ToArray();
+		} 
 		
-        public void FadeBackBufferToBlack(float alpha)
-        {
-            Viewport viewport = GraphicsDevice.Viewport;
+		public void FadeBackBufferToBlack(float alpha)
+		{
+			Viewport viewport = GraphicsDevice.Viewport;
 			Rectangle destination = new Rectangle(0, 0, viewport.Width, viewport.Height);
             
 			this.spriteBatch.Begin();
-            this.spriteBatch.Draw(blankTexture, destination, Color.Black * alpha);
-            this.spriteBatch.End();
-        }
+			this.spriteBatch.Draw(blankTexture, destination, Color.Black * alpha);
+			this.spriteBatch.End();
+		}
 	}
 }
