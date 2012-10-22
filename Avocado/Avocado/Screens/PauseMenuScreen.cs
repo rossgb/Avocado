@@ -14,7 +14,7 @@ namespace Avocado
 			MenuEntry quitGameMenuEntry = new MenuEntry("MENU");
 
 			resumeGameMenuEntry.Selected += this.OnCancel;
-			quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
+			quitGameMenuEntry.Selected += this.QuitGameMenuEntrySelected;
 
 			this.MenuEntries.Add(resumeGameMenuEntry);
 			this.MenuEntries.Add(quitGameMenuEntry);
