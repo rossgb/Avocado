@@ -19,7 +19,6 @@ namespace Avocado
 		float pauseAlpha;
 		
 		List<Player> players;
-		List<Enemy> enemies;
 		List<Entity> entities;
 
 		#endregion
@@ -42,9 +41,11 @@ namespace Avocado
 			}
 
 			this.players = new List<Player>();
-			this.enemies = new List<Enemy>();
+			this.entities = new List<Entities>();
 
 			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 100, 10));
+
+			this.entities.AddRange(this.players);
 
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
@@ -104,15 +105,14 @@ namespace Avocado
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
 
-				this.entities = this.players.Concat(this.enemies).ToList();
-
 				foreach (Entity entity in this.entities)
 				{
 					entity.Update(gameTime)
 					entity.Direction.X -= this.scrollVelocity;
 				}
 
-				// TODO: sort entities based on Y position
+				// TODO: resolve collisions!
+				// TODO: sort entities based on Y position!
 			}
 		}
 
