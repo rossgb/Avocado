@@ -108,8 +108,8 @@ namespace Avocado
 
 				foreach (Entity entity in this.entities)
 				{
-					entity.Direction.X -= this.scrollVelocity;
 					entity.Update(gameTime)
+					entity.Direction.X -= this.scrollVelocity;
 				}
 
 				// TODO: sort entities based on Y position
