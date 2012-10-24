@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,8 +17,10 @@ namespace Avocado
 		ScrollingEnvironment foreground;
 		int scrollVelocity;
 		float pauseAlpha;
+		
 		List<Player> players;
-		//List<Enemy> enemies;
+		List<Enemy> enemies;
+		List<Entity> entities;
 
 		#endregion
 
@@ -41,10 +42,10 @@ namespace Avocado
 			}
 
 			this.players = new List<Player>();
+			this.enemies = new List<Enemy>();
+
 			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 100, 10));
-			
-			//this.enemies = new List<Enemy>(); //needs to be filled with a factory
-			
+
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
@@ -52,7 +53,6 @@ namespace Avocado
 				this.content.Load<Texture2D>("Environment/foreground"), this.scrollVelocity * 2,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
 
-			//Thread.Sleep(1000);
 			this.ScreenManager.Game.ResetElapsedTime();
 		}
 
@@ -104,15 +104,20 @@ namespace Avocado
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
 
-				foreach (Player player in this.players)
+				this.entities = this.players.Concat(this.enemies).ToList();
+
+				foreach (Entity entity in this.entities)
 				{
-					player.Position.X -= this.scrollVelocity * gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+					entity.Update(gameTime)
 				}
 
-				foreach (Player player in this.players)
+				foreach (Entity entity in this.entities)
 				{
-					player.Update(gameTime);
+					// TODO: should update direction, not position
+					entity.Position.X -= this.scrollVelocity * gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
 				}
+
+				// TODO: sort entities based on Y position
 			}
 		}
 
@@ -121,9 +126,9 @@ namespace Avocado
 			this.ScreenManager.SpriteBatch.Begin();
 			this.background.Draw(this.ScreenManager.SpriteBatch);
 
-			foreach (Player player in this.players)
+			foreach (Entity entity in this.entities)
 			{
-				player.Draw(this.ScreenManager.SpriteBatch);
+				entity.Draw(this.ScreenManager.SpriteBatch);
 			}
 
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
