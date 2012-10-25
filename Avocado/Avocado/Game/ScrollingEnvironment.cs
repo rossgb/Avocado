@@ -8,16 +8,20 @@ namespace Avocado
 {
 	public class ScrollingEnvironment
 	{
+		#region Fields
+
 		Texture2D texture;
 		Vector2[] positions;
 
-		int velocity;
+		float velocity;
 
-		public ScrollingEnvironment(Texture2D texture, int velocity, int screenWidth)
-		{ 
+		#endregion
+
+		public ScrollingEnvironment(Texture2D texture, float velocity, int screenWidth)
+		{
 			this.texture = texture;
 			this.velocity = velocity;
-			this.positions = new Vector2[(int) Math.Ceiling((double) screenWidth / this.texture.Width) + 1];
+			this.positions = new Vector2[(int)Math.Ceiling((double)screenWidth / this.texture.Width) + 1];
 
 			for (int i = 0; i < this.positions.Length; i++)
 			{
@@ -40,20 +44,16 @@ namespace Avocado
 
 			for (int i = 0; i < this.positions.Length; i++)
 			{
-				this.positions[i].X -= this.velocity * gameTime.ElapsedGameTime.Milliseconds / 1000.0f;
+				this.positions[i].X -= this.velocity * gameTime.ElapsedGameTime.Milliseconds;
 			}
 		}
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Begin();
-
 			for (int i = 0; i < this.positions.Length; i++)
 			{
 				spriteBatch.Draw(this.texture, this.positions[i], Color.White);
 			}
-
-			spriteBatch.End();
 		}
 	}
 }

@@ -5,8 +5,12 @@ namespace Avocado
 {
 	class AvocadoGame : Game
 	{
+		#region Fields
+
 		GraphicsDeviceManager graphics;
 		ScreenManager screenManager;
+
+		#endregion
 
 		public AvocadoGame()
 		{
@@ -18,8 +22,10 @@ namespace Avocado
 			this.graphics.PreferredBackBufferHeight = 768;
 
 			this.screenManager = new ScreenManager(this);
-			this.screenManager.AddScreen(new GameplayScreen(), null);
 			this.Components.Add(screenManager);
+			
+			// begin game at main menu
+			this.screenManager.AddScreen(new MainMenuScreen(), null);
 		}
 
 		protected override void Draw(GameTime gameTime)

@@ -107,17 +107,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\ICollidable.cs" />
-    <Compile Include="Interfaces\IDrawable.cs" />
-    <Compile Include="Interfaces\IUpdatable.cs" />
-    <Compile Include="ScreenManager\GameScreen.cs" />
-    <Compile Include="ScreenManager\InputState.cs" />
-    <Compile Include="ScreenManager\ScreenManager.cs" />
+    <Compile Include="Entity\Coin.cs" />
+    <Compile Include="Entity\Enchantment.cs" />
+    <Compile Include="Entity\Enemy.cs" />
+    <Compile Include="Entity\Entity.cs" />
+    <Compile Include="Entity\Item.cs" />
+    <Compile Include="Entity\Player.cs" />
+    <Compile Include="GameStateManager\GameScreen.cs" />
+    <Compile Include="GameStateManager\InputState.cs" />
+    <Compile Include="GameStateManager\ScreenManager.cs" />
     <Compile Include="Game\ScrollingEnvironment.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Interfaces\IControllable.cs" />
+    <Compile Include="GameStateManager\LoadingScreen.cs" />
+    <Compile Include="Screens\MainMenuScreen.cs" />
+    <Compile Include="GameStateManager\MenuEntry.cs" />
+    <Compile Include="GameStateManager\MenuScreen.cs" />
+    <Compile Include="Screens\PauseMenuScreen.cs" />
+    <Compile Include="GameStateManager\PlayerIndexEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
