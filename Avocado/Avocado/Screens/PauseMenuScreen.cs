@@ -30,16 +30,5 @@ namespace Avocado
 		}
 
 		#endregion
-
-		#region Draw
-
-		public override void Draw(GameTime gameTime)
-		{
-			this.ScreenManager.SpriteBatch.Begin();
-			base.Draw(gameTime);
-			this.ScreenManager.SpriteBatch.End();
-		}
-
-		#endregion
 	}
 }

@@ -14,7 +14,7 @@ namespace Avocado
 		ScrollingEnvironment foreground;
 		Texture2D menuBackdrop;
 		Rectangle menuBackdropArea;
-		int scrollVelocity;
+		float scrollVelocity;
 
 		#endregion
 
@@ -23,7 +23,7 @@ namespace Avocado
 		public MainMenuScreen() :
 			base("AVOCADO")
 		{
-			this.scrollVelocity = 300;
+			this.scrollVelocity = 0.3f;
 
 			MenuEntry playGameMenuEntry = new MenuEntry("PLAY");
 			MenuEntry quitMenuEntry = new MenuEntry("QUIT");
@@ -88,12 +88,13 @@ namespace Avocado
 
 		public override void Draw(GameTime gameTime)
 		{
-			this.ScreenManager.SpriteBatch.Begin();
 			this.background.Draw(this.ScreenManager.SpriteBatch);
 			this.ScreenManager.SpriteBatch.Draw(this.menuBackdrop, this.menuBackdropArea, Color.White * 0.5f);
+			
+			// Draw menu items.
 			base.Draw(gameTime);
+
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
-			this.ScreenManager.SpriteBatch.End();
 		}
 
 

@@ -14,15 +14,16 @@ namespace Avocado
 		public Vector2 Direction;
 		public Vector2 Position;
 
-		public Entity(Texture2D texture, int speed)
+		public Entity(Texture2D texture, Vector2 position, int speed)
 		{
 			this.texture = texture;
+			this.Position = position;
 			this.speed = speed;
 		}
 
 		public virtual void Update(GameTime gameTime)
 		{
-			this.Position += this.Direction * this.speed;
+			this.Position += this.Direction * this.speed * gameTime.ElapsedGameTime.Milliseconds;
 		}
 
 		public virtual void Draw(SpriteBatch spriteBatch)

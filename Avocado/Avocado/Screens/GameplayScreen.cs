@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -15,7 +16,7 @@ namespace Avocado
 		ContentManager content;
 		ScrollingEnvironment background;
 		ScrollingEnvironment foreground;
-		int scrollVelocity;
+		float scrollVelocity;
 		float pauseAlpha;
 		
 		List<Player> players;
@@ -28,7 +29,7 @@ namespace Avocado
 		public GameplayScreen()
 		{
 			// TODO: customize levels, possibly parse textfiles specify level content, scrollVelocity, etc...
-			this.scrollVelocity = 200;
+			this.scrollVelocity = 0.2f;
 			this.TransitionOffTime = TimeSpan.FromSeconds(1.5f);
 			this.TransitionOnTime = TimeSpan.FromSeconds(0.5f);
 		}
@@ -43,9 +44,15 @@ namespace Avocado
 			this.players = new List<Player>();
 			this.entities = new List<Entity>();
 
-			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 100, 10));
+			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"),
+				new Vector2(500, 300), 100, 10));
 
 			this.entities.AddRange(this.players);
+
+			foreach (Entity e in this.entities)
+			{
+
+			}
 
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
@@ -107,8 +114,8 @@ namespace Avocado
 
 				foreach (Entity entity in this.entities)
 				{
+					//entity.Direction = new Vector2(this.scrollVelocity, 0);
 					entity.Update(gameTime);
-					entity.Direction.X -= this.scrollVelocity;
 				}
 
 				// TODO: resolve collisions!
@@ -118,7 +125,6 @@ namespace Avocado
 
 		public override void Draw(GameTime gameTime)
 		{
-			this.ScreenManager.SpriteBatch.Begin();
 			this.background.Draw(this.ScreenManager.SpriteBatch);
 
 			foreach (Entity entity in this.entities)
@@ -127,7 +133,6 @@ namespace Avocado
 			}
 
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
-			this.ScreenManager.SpriteBatch.End();
 
 			if (this.TransitionPosition > 0 || this.pauseAlpha > 0)
 			{

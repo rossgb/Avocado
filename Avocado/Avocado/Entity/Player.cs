@@ -11,15 +11,16 @@ namespace Avocado
 	{
 		int health;
 
-		public Player(Texture2D texture, int health, int speed) : 
-			base(texture, speed)
+		public Player(Texture2D texture, Vector2 position, int health, int speed) : 
+			base(texture, position, speed)
 		{
 			this.health = health;
 		}
 
 		public void HandleInput(InputState input, int index)
 		{
-			this.Direction = input.CurrentGamePadStates[index].ThumbSticks.Left;
+			this.Direction 
+				= input.CurrentGamePadStates[index].ThumbSticks.Left;
 			this.Direction.Y *= -1;
 		}
 	}

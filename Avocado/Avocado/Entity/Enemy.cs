@@ -10,15 +10,10 @@ namespace Avocado
 	{
 		int health;
 
-		public Enemy(Texture2D texture, int health, int speed) : 
-			base(texture, speed)
+		public Enemy(Texture2D texture, Vector2 position, int health, int speed) : 
+			base(texture, position, speed)
 		{
 			this.health = health;
-		}
-
-		public override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
 		}
 	}
 }
