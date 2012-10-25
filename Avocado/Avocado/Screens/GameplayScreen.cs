@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -41,7 +41,7 @@ namespace Avocado
 			}
 
 			this.players = new List<Player>();
-			this.entities = new List<Entities>();
+			this.entities = new List<Entity>();
 
 			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 100, 10));
 
@@ -107,7 +107,7 @@ namespace Avocado
 
 				foreach (Entity entity in this.entities)
 				{
-					entity.Update(gameTime)
+					entity.Update(gameTime);
 					entity.Direction.X -= this.scrollVelocity;
 				}
 
