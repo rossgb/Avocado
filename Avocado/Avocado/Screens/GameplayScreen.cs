@@ -44,8 +44,11 @@ namespace Avocado
 			this.players = new List<Player>();
 			this.entities = new List<Entity>();
 
-			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), new Vector2(500, 300), 100, 0.5f));
-			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), new Vector2(500, 280), 100, 0.5f));
+			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 
+				new Vector2(500, 300), 100, 0.5f));
+			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 
+				new Vector2(500, 280), 100, 0.5f));
+
 			this.entities.AddRange(this.players);
 
 			this.background = new ScrollingEnvironment(
