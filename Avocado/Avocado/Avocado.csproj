@@ -107,8 +107,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Coin.cs" />
+    <Compile Include="Entity\Enchantment.cs" />
     <Compile Include="Entity\Enemy.cs" />
     <Compile Include="Entity\Entity.cs" />
+    <Compile Include="Entity\Item.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="GameStateManager\GameScreen.cs" />
     <Compile Include="GameStateManager\InputState.cs" />

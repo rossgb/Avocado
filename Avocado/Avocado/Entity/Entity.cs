@@ -6,15 +6,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Avocado
 {
-	public class Entity
+	public abstract class Entity
 	{
 		Texture2D texture;
-		int speed;
+		float speed;
 		
 		public Vector2 Direction;
 		public Vector2 Position;
 
-		public Entity(Texture2D texture, Vector2 position, int speed)
+		public Entity(Texture2D texture, Vector2 position, float speed)
 		{
 			this.texture = texture;
 			this.Position = position;

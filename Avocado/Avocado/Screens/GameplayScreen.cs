@@ -44,15 +44,9 @@ namespace Avocado
 			this.players = new List<Player>();
 			this.entities = new List<Entity>();
 
-			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"),
-				new Vector2(500, 300), 100, 10));
-
+			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), new Vector2(500, 300), 100, 0.5f));
+			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), new Vector2(500, 280), 100, 0.5f));
 			this.entities.AddRange(this.players);
-
-			foreach (Entity e in this.entities)
-			{
-
-			}
 
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
@@ -80,7 +74,9 @@ namespace Avocado
 				throw new ArgumentNullException("input");
 			}
 
-			bool gamePadDisconnected = false;
+			int playerIndex = (int) this.ControllingPlayer.Value;
+			bool gamePadDisconnected = !input.CurrentGamePadStates[playerIndex].IsConnected &&
+				input.GamePadWasConnected[playerIndex]; ;
 
 			if (input.IsPauseGame(this.ControllingPlayer) || gamePadDisconnected)
 			{
@@ -114,12 +110,17 @@ namespace Avocado
 
 				foreach (Entity entity in this.entities)
 				{
-					//entity.Direction = new Vector2(this.scrollVelocity, 0);
 					entity.Update(gameTime);
+					entity.Position.X -= this.scrollVelocity * gameTime.ElapsedGameTime.Milliseconds;
 				}
 
 				// TODO: resolve collisions!
-				// TODO: sort entities based on Y position!
+			
+				// Sort entities by Y position to draw in correct order.
+				this.entities.Sort(delegate(Entity a, Entity b) 
+				{
+					return a.Position.Y.CompareTo(b.Position.Y);
+				});
 			}
 		}
 

@@ -10,7 +10,7 @@ namespace Avocado
 	{
 		int health;
 
-		public Enemy(Texture2D texture, Vector2 position, int health, int speed) : 
+		public Enemy(Texture2D texture, Vector2 position, int health, float speed) : 
 			base(texture, position, speed)
 		{
 			this.health = health;
