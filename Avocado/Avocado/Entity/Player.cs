@@ -21,7 +21,7 @@ namespace Avocado
 		{
 			KeyboardState keyboardState = input.CurrentKeyboardStates[index];
 			GamePadState gamePadState = input.CurrentGamePadStates[index];
-
+            
 			this.Direction = Vector2.Zero;
 			
 			// XBox controller input.

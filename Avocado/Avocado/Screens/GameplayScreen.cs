@@ -127,12 +127,7 @@ namespace Avocado
 		public override void Draw(GameTime gameTime)
 		{
 			this.background.Draw(this.ScreenManager.SpriteBatch);
-
-			foreach (Entity entity in this.entities)
-			{
-				entity.Draw(this.ScreenManager.SpriteBatch);
-			}
-
+            this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 
 			if (this.TransitionPosition > 0 || this.pauseAlpha > 0)
