@@ -14,8 +14,11 @@ namespace Avocado
 		#region Fields
 
 		ContentManager content;
+		
 		ScrollingEnvironment background;
 		ScrollingEnvironment foreground;
+		ScrollingEnvironment clouds;
+
 		float scrollVelocity;
 		float pauseAlpha;
 		
@@ -56,7 +59,10 @@ namespace Avocado
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
 			this.foreground = new ScrollingEnvironment(
-				this.content.Load<Texture2D>("Environment/foreground"), this.scrollVelocity * 2,
+				this.content.Load<Texture2D>("Environment/foreground"), this.scrollVelocity * 1.5f,
+				this.ScreenManager.GraphicsDevice.Viewport.Width);
+			this.clouds = new ScrollingEnvironment(
+				this.content.Load<Texture2D>("Environment/clouds"), this.scrollVelocity * 2,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
 
 			this.ScreenManager.Game.ResetElapsedTime();
@@ -124,6 +130,7 @@ namespace Avocado
 			{
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
+				this.clouds.Update(gameTime);
 
 				foreach (Entity entity in this.entities)
 				{
@@ -146,6 +153,7 @@ namespace Avocado
 			this.background.Draw(this.ScreenManager.SpriteBatch);
             this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
+			this.clouds.Draw(this.ScreenManager.SpriteBatch);
 
 			if (this.TransitionPosition > 0 || this.pauseAlpha > 0)
 			{

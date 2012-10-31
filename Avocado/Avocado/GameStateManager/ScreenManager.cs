@@ -126,7 +126,7 @@ namespace Avocado
 			}
 
 			// Create render target at desired resolution.
-			this.renderTarget = new RenderTarget2D(this.GraphicsDevice, 1024, 768);
+			this.renderTarget = new RenderTarget2D(this.GraphicsDevice, 1048, 768);
 		}
 
 
@@ -223,8 +223,8 @@ namespace Avocado
 		/// </summary>
 		public override void Draw(GameTime gameTime)
 		{
-			this.GraphicsDevice.SetRenderTarget(this.renderTarget);
-			
+			//this.GraphicsDevice.SetRenderTarget(this.renderTarget);
+	
 			this.spriteBatch.Begin();
 
 			foreach (GameScreen screen in screens)
@@ -237,12 +237,12 @@ namespace Avocado
 
 			this.spriteBatch.End();
 		
-			this.GraphicsDevice.SetRenderTarget(null);
-			this.GraphicsDevice.Clear(Color.Black);
+			//this.GraphicsDevice.SetRenderTarget(null);
+			//this.GraphicsDevice.Clear(Color.Black);
 
-			this.spriteBatch.Begin();
-			this.spriteBatch.Draw(this.renderTarget, this.Game.Window.ClientBounds, Color.White);
-			this.spriteBatch.End();
+			//this.spriteBatch.Begin();
+			//this.spriteBatch.Draw(this.renderTarget, Vector2.Zero, Color.White);
+			//this.spriteBatch.End();
 		}
 
 

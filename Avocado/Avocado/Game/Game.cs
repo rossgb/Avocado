@@ -19,8 +19,8 @@ namespace Avocado
 			this.graphics = new GraphicsDeviceManager(this);
 		    
 			//this.graphics.IsFullScreen = true;
-			this.graphics.PreferredBackBufferWidth = 2048;
 			this.graphics.PreferredBackBufferHeight = 768;
+			this.graphics.PreferredBackBufferWidth = 1024;
 
 			this.screenManager = new ScreenManager(this);
 			this.Components.Add(screenManager);

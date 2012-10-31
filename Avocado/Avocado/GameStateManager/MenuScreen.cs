@@ -225,7 +225,7 @@ namespace Avocado
 				graphics.Viewport.Height / 3 - transitionOffset * 100);
 			Vector2 titleOrigin = font.MeasureString(menuTitle) / 2;
 			Color titleColor = Color.White * TransitionAlpha;
-			float titleScale = 2.0f;
+			float titleScale = 1.6f;
 
 			spriteBatch.DrawString(font, menuTitle, titlePosition, titleColor, 0,
 									titleOrigin, titleScale, SpriteEffects.None, 0);
