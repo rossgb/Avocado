@@ -42,6 +42,7 @@ namespace Avocado
 			}
 
 			this.players = new List<Player>();
+
 			this.entities = new List<Entity>();
 
 			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), new Vector2(500, 300), 100, 0.5f));
@@ -56,6 +57,8 @@ namespace Avocado
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
 
 			this.ScreenManager.Game.ResetElapsedTime();
+
+			Debug.WriteLine(this.ScreenManager.GraphicsDevice.Viewport.Bounds);
 		}
 
 		public override void UnloadContent()
@@ -95,7 +98,18 @@ namespace Avocado
 
 		#region Update and Draw
 
-		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+		private void ResolveCollisions()
+		{
+			Rectangle bounds = this.ScreenManager.GraphicsDevice.Viewport.Bounds;
+
+			foreach (Player player in this.players)
+			{
+				player.Position.X = MathHelper.Clamp(player.Position.X, 0, bounds.Width);
+				player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, bounds.Height);
+			}
+		}
+
+	    public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
 		{
 			base.Update(gameTime, otherScreenHasFocus, false);
 
@@ -114,8 +128,8 @@ namespace Avocado
 					entity.Position.X -= this.scrollVelocity * gameTime.ElapsedGameTime.Milliseconds;
 				}
 
-				// TODO: resolve collisions!
-			
+                this.ResolveCollisions();
+
 				// Sort entities by Y position to draw in correct order.
 				this.entities.Sort(delegate(Entity a, Entity b) 
 				{

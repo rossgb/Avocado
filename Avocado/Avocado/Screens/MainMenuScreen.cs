@@ -12,7 +12,6 @@ namespace Avocado
 		ContentManager content;
 		ScrollingEnvironment background;
 		ScrollingEnvironment foreground;
-		Texture2D menuBackdrop;
 		Rectangle menuBackdropArea;
 		float scrollVelocity;
 
@@ -48,8 +47,6 @@ namespace Avocado
 			this.foreground = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/foreground"), this.scrollVelocity * 2,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
-			this.menuBackdrop = new Texture2D(this.ScreenManager.GraphicsDevice, 1, 1);
-			this.menuBackdrop.SetData(new[] { Color.Black });
 			this.menuBackdropArea = new Rectangle(
 				this.ScreenManager.GraphicsDevice.Viewport.Width / 8, 0,
 				this.ScreenManager.GraphicsDevice.Viewport.Width / 4, 
@@ -89,7 +86,7 @@ namespace Avocado
 		public override void Draw(GameTime gameTime)
 		{
 			this.background.Draw(this.ScreenManager.SpriteBatch);
-			this.ScreenManager.SpriteBatch.Draw(this.menuBackdrop, this.menuBackdropArea, Color.White * 0.5f);
+			this.ScreenManager.SpriteBatch.Draw(this.ScreenManager.BlankTexture, this.menuBackdropArea, Color.Black * 0.5f);
 			
 			// Draw menu items.
 			base.Draw(gameTime);

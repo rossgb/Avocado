@@ -35,16 +35,20 @@ namespace Avocado
 
 		SpriteBatch spriteBatch;
 		SpriteFont font;
+		RenderTarget2D renderTarget;
 		Texture2D blankTexture;
 
 		bool isInitialized;
-
 		bool traceEnabled;
 
 		#endregion
 
 		#region Properties
 
+        public Texture2D BlankTexture
+        {
+            get { return blankTexture; }
+        }
 
 		/// <summary>
 		/// A default SpriteBatch shared by all the screens. This saves
@@ -112,14 +116,17 @@ namespace Avocado
 			ContentManager content = Game.Content;
 
 			spriteBatch = new SpriteBatch(GraphicsDevice);
-			font = content.Load<SpriteFont>("menufont");
-			blankTexture = content.Load<Texture2D>("blank");
+			font = content.Load<SpriteFont>("Fonts/menufont");
+			blankTexture = content.Load<Texture2D>("Environment/blank");
 
 			// Tell each of the screens to load their content.
 			foreach (GameScreen screen in screens)
 			{
 				screen.LoadContent();
 			}
+
+			// Create render target at desired resolution.
+			this.renderTarget = new RenderTarget2D(this.GraphicsDevice, 1024, 768);
 		}
 
 
@@ -216,6 +223,8 @@ namespace Avocado
 		/// </summary>
 		public override void Draw(GameTime gameTime)
 		{
+			this.GraphicsDevice.SetRenderTarget(this.renderTarget);
+			
 			this.spriteBatch.Begin();
 
 			foreach (GameScreen screen in screens)
@@ -226,6 +235,13 @@ namespace Avocado
 				screen.Draw(gameTime);
 			}
 
+			this.spriteBatch.End();
+		
+			this.GraphicsDevice.SetRenderTarget(null);
+			this.GraphicsDevice.Clear(Color.Black);
+
+			this.spriteBatch.Begin();
+			this.spriteBatch.Draw(this.renderTarget, this.Game.Window.ClientBounds, Color.White);
 			this.spriteBatch.End();
 		}
 
