@@ -25,6 +25,8 @@ namespace Avocado
 		List<Player> players;
 		List<Entity> entities;
 
+		SpatialHash spatialHash;
+
 		#endregion
 
 		#region Initialization
@@ -35,6 +37,10 @@ namespace Avocado
 			this.scrollVelocity = 0.2f;
 			this.TransitionOffTime = TimeSpan.FromSeconds(1.5f);
 			this.TransitionOnTime = TimeSpan.FromSeconds(0.5f);
+
+			this.players = new List<Player>();
+			this.entities = new List<Entity>();
+			this.spatialHash = new SpatialHash(30);
 		}
 
 		public override void LoadContent()
@@ -44,14 +50,11 @@ namespace Avocado
 				this.content = new ContentManager(this.ScreenManager.Game.Services, "Content");
 			}
 
-			this.players = new List<Player>();
-
-			this.entities = new List<Entity>();
-
-			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 
+			this.players.Add(new Player(this.ScreenManager.BlankTexture,
 				new Vector2(500, 300), 100, 0.5f));
-			this.players.Add(new Player(this.content.Load<Texture2D>("Character/playerStand"), 
+			this.players.Add(new Player(this.ScreenManager.BlankTexture, 
 				new Vector2(500, 280), 100, 0.5f));
+			this.players[0].Color = Color.Blue;
 
 			this.entities.AddRange(this.players);
 
@@ -66,8 +69,6 @@ namespace Avocado
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
 
 			this.ScreenManager.Game.ResetElapsedTime();
-
-			Debug.WriteLine(this.ScreenManager.GraphicsDevice.Viewport.Bounds);
 		}
 
 		public override void UnloadContent()
@@ -109,12 +110,31 @@ namespace Avocado
 
 		private void ResolveCollisions()
 		{
+			this.spatialHash.Repopulate(this.entities);
+
 			Rectangle bounds = this.ScreenManager.GraphicsDevice.Viewport.Bounds;
 
 			foreach (Player player in this.players)
 			{
 				player.Position.X = MathHelper.Clamp(player.Position.X, 0, bounds.Width);
 				player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, bounds.Height);
+
+				List<Entity> collisionCandidates = this.spatialHash.Query(player);
+
+				if (collisionCandidates != null)
+				{
+					foreach (Entity entity in collisionCandidates)
+					{
+						if (entity != player)
+						{
+							Console.WriteLine("Collision");
+						}
+						else
+						{
+							Console.WriteLine("Boring");
+						}
+					}
+				}
 			}
 		}
 
@@ -151,8 +171,10 @@ namespace Avocado
 		public override void Draw(GameTime gameTime)
 		{
 			this.background.Draw(this.ScreenManager.SpriteBatch);
-            this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
+			//this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
+			// TEMPORARY FOR COLLISION TESTING
+			this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
 			this.clouds.Draw(this.ScreenManager.SpriteBatch);
 
 			if (this.TransitionPosition > 0 || this.pauseAlpha > 0)

@@ -117,7 +117,7 @@ namespace Avocado
 
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 			font = content.Load<SpriteFont>("Fonts/menufont");
-			blankTexture = content.Load<Texture2D>("Environment/blank");
+			blankTexture = content.Load<Texture2D>("General/blank");
 
 			// Tell each of the screens to load their content.
 			foreach (GameScreen screen in screens)
@@ -223,8 +223,6 @@ namespace Avocado
 		/// </summary>
 		public override void Draw(GameTime gameTime)
 		{
-			//this.GraphicsDevice.SetRenderTarget(this.renderTarget);
-	
 			this.spriteBatch.Begin();
 
 			foreach (GameScreen screen in screens)
@@ -236,13 +234,6 @@ namespace Avocado
 			}
 
 			this.spriteBatch.End();
-		
-			//this.GraphicsDevice.SetRenderTarget(null);
-			//this.GraphicsDevice.Clear(Color.Black);
-
-			//this.spriteBatch.Begin();
-			//this.spriteBatch.Draw(this.renderTarget, Vector2.Zero, Color.White);
-			//this.spriteBatch.End();
 		}
 
 

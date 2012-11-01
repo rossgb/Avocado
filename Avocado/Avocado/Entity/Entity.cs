@@ -16,14 +16,21 @@ namespace Avocado
 		public Vector2 Position;
 		public int Radius;
 
+		// TEMPORARY FOR COLLISION TESTING
+		public Rectangle Body;
+		public Color Color;
+
 		public Entity(Texture2D texture, Vector2 position, float speed)
 		{
 			this.Position = position;
-			this.Radius = texture.Width / 2;
+			this.Radius = 25;
 
-			this.drawOffset = new Vector2(-this.Radius, this.Radius - texture.Height);
+			this.drawOffset = new Vector2(-this.Radius, -this.Radius);
 			this.speed = speed;
 			this.texture = texture;
+
+			this.Color = Color.Red;
+			this.Body = new Rectangle(0, 0, this.Radius * 2, this.Radius * 2);
 		}
 
 		public virtual void Update(GameTime gameTime)
@@ -33,7 +40,7 @@ namespace Avocado
 
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(this.texture, this.Position + this.drawOffset, Color.White);
+			spriteBatch.Draw(this.texture, this.Position + this.drawOffset, this.Body, this.Color);
 		}
 	}
 }
