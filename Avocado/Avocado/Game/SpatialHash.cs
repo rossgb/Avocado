@@ -61,6 +61,8 @@ namespace Avocado
 			int x = (int) entity.Position.X / this.cellSize;
 			int y = (int) entity.Position.Y / this.cellSize;
 
+			this.map.GetValue(new Vector2(x, y)).remove(entity);
+
 			for (int i = x - offset; i <= x + offset; i++)
 			{
 				for (int j = y - offset; j <= y + offset; j++)
@@ -72,7 +74,6 @@ namespace Avocado
 				}
 			}
 
-			collisionCandidates.Remove(entity);
 			return collisionCandidates.Count > 0 ? collisionCandidates : null;
 		}
 
