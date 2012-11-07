@@ -60,14 +60,18 @@ namespace Avocado
 			int offset = Math.Max(1, entity.Radius / this.cellSize);
 			int x = (int) entity.Position.X / this.cellSize;
 			int y = (int) entity.Position.Y / this.cellSize;
+			Vector2 key = new Vector2(x, y);
 
-			this.map.GetValue(new Vector2(x, y)).remove(entity);
+			this.map.GetValue(key).remove(entity);
 
 			for (int i = x - offset; i <= x + offset; i++)
 			{
 				for (int j = y - offset; j <= y + offset; j++)
 				{
-					if (this.map.TryGetValue(new Vector2(i, j), out candidatesInCell))
+					key.X = i;
+					key.Y = j;
+
+					if (this.map.TryGetValue(key, out candidatesInCell))
 					{
 						collisionCandidates.AddRange(candidatesInCell);
 					}
