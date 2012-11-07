@@ -128,7 +128,7 @@ namespace Avocado
 			}
 		}
 
-	    public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
 		{
 			base.Update(gameTime, otherScreenHasFocus, false);
 
@@ -148,7 +148,7 @@ namespace Avocado
 					entity.Position.X -= this.scrollVelocity * gameTime.ElapsedGameTime.Milliseconds;
 				}
 
-                this.ResolveCollisions();
+				this.ResolveCollisions();
 
 				// Sort entities by Y position to draw in correct order.
 				this.entities.Sort((a, b) => a.Position.Y.CompareTo(b.Position.Y));
