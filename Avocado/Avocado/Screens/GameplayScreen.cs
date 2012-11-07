@@ -21,11 +21,15 @@ namespace Avocado
 
 		float scrollVelocity;
 		float pauseAlpha;
-		
-		List<Player> players;
-		List<Entity> entities;
 
-		SpatialHash spatialHash;
+		List<Entity> entities;
+		List<Player> players;
+		List<Enemy> enemies;
+		List<Item> items;
+		List<Projectile> projectiles;
+
+		SpatialHash enemyHash;
+		SpatialHash itemHash;
 
 		#endregion
 
@@ -38,9 +42,13 @@ namespace Avocado
 			this.TransitionOffTime = TimeSpan.FromSeconds(1.5f);
 			this.TransitionOnTime = TimeSpan.FromSeconds(0.5f);
 
+			this.enemies = new List<Enemies();
+			this.items = new List<Item>();
 			this.players = new List<Player>();
-			this.entities = new List<Entity>();
-			this.spatialHash = new SpatialHash(30);
+			this.projectiles = new List<Projectiles>();
+			
+			this.enemyHash = new SpatialHash(30);
+			this.itemHash = new SpatialHash(30);
 		}
 
 		public override void LoadContent()
@@ -113,7 +121,8 @@ namespace Avocado
 
 		private void ResolveCollisions()
 		{
-			this.spatialHash.Repopulate(this.entities);
+			this.enemyHash.Repopulate(this.enemies);
+			this.itemHash.Repopulate(this.items);
 
 			Rectangle bounds = this.ScreenManager.GraphicsDevice.Viewport.Bounds;
 
@@ -123,8 +132,14 @@ namespace Avocado
 				player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, bounds.Height);
 
 				List<Entity> collisionCandidates = this.spatialHash.Query(player);
-
+				
 				// Resolve collisions!
+			}
+
+			foreach(Projectile projectile in this.projectiles)
+			{
+				List<Enemy> toPotentiallyBeDecimated = this.enemyHash.Query(projectile);
+				// Decimate enemies here.
 			}
 		}
 
@@ -137,7 +152,9 @@ namespace Avocado
 				Math.Max(this.pauseAlpha - 1.0f / 32, 0);
 
 			if (this.IsActive)
-			{
+			{		
+				this.entities
+
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
 				this.clouds.Update(gameTime);
