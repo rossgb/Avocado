@@ -113,7 +113,7 @@
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\Item.cs" />
     <Compile Include="Entity\Player.cs" />
-    <Compile Include="Entity\SpatialHash.cs" />
+    <Compile Include="Game\SpatialHash.cs" />
     <Compile Include="GameStateManager\GameScreen.cs" />
     <Compile Include="GameStateManager\InputState.cs" />
     <Compile Include="GameStateManager\ScreenManager.cs" />

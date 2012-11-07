@@ -50,14 +50,17 @@ namespace Avocado
 				this.content = new ContentManager(this.ScreenManager.Game.Services, "Content");
 			}
 
+			// Create players.
 			this.players.Add(new Player(this.ScreenManager.BlankTexture,
 				new Vector2(500, 300), 100, 0.5f));
 			this.players.Add(new Player(this.ScreenManager.BlankTexture, 
 				new Vector2(500, 280), 100, 0.5f));
 			this.players[0].Color = Color.Blue;
 
+			// Add players to entities.
 			this.entities.AddRange(this.players);
 
+			// Create scrolling enivronment for level.
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
@@ -121,20 +124,7 @@ namespace Avocado
 
 				List<Entity> collisionCandidates = this.spatialHash.Query(player);
 
-				if (collisionCandidates != null)
-				{
-					foreach (Entity entity in collisionCandidates)
-					{
-						if (entity != player)
-						{
-							Console.WriteLine("Collision");
-						}
-						else
-						{
-							Console.WriteLine("Boring");
-						}
-					}
-				}
+				// Resolve collisions!
 			}
 		}
 
@@ -161,10 +151,7 @@ namespace Avocado
                 this.ResolveCollisions();
 
 				// Sort entities by Y position to draw in correct order.
-				this.entities.Sort(delegate(Entity a, Entity b) 
-				{
-					return a.Position.Y.CompareTo(b.Position.Y);
-				});
+				this.entities.Sort((a, b) => a.Position.Y.CompareTo(b.Position.Y));
 			}
 		}
 

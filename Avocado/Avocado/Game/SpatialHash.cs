@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Avocado
 {
@@ -9,7 +10,7 @@ namespace Avocado
 	{
 		#region Fields
 
-		Dictionary<Tuple<int, int>, List<Entity>> map;
+		Dictionary<Vector2, List<Entity>> map;
 		int cellSize;
 
 		#endregion
@@ -19,7 +20,7 @@ namespace Avocado
 		public SpatialHash(int cellSize)
 		{
 			this.cellSize = cellSize;
-			this.map = new Dictionary<Tuple<int, int>, List<Entity>>();
+			this.map = new Dictionary<Vector2, List<Entity>>();
 		}
 
 		#endregion
@@ -35,7 +36,7 @@ namespace Avocado
 		{
 			int a = (int) entity.Position.X / this.cellSize;
 			int b = (int) entity.Position.Y / this.cellSize;
-			Tuple<int, int> key = new Tuple<int,int>(a, b);
+			Vector2 key = new Vector2(a, b);
 
 			if (!this.map.ContainsKey(key))
 			{
@@ -64,13 +65,14 @@ namespace Avocado
 			{
 				for (int j = y - offset; j <= y + offset; j++)
 				{
-					if (this.map.TryGetValue(new Tuple<int,int>(i, j), out candidatesInCell))
+					if (this.map.TryGetValue(new Vector2(i, j), out candidatesInCell))
 					{
 						collisionCandidates.AddRange(candidatesInCell);
 					}
 				}
 			}
 
+			collisionCandidates.Remove(entity);
 			return collisionCandidates.Count > 0 ? collisionCandidates : null;
 		}
 
