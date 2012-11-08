@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -22,14 +21,9 @@ namespace Avocado
 		float scrollVelocity;
 		float pauseAlpha;
 
-		List<Entity> entities;
 		List<Player> players;
-		List<Enemy> enemies;
-		List<Item> items;
 		List<Projectile> projectiles;
-
-		SpatialHash enemyHash;
-		SpatialHash itemHash;
+		List<Entity> entities;
 
 		#endregion
 
@@ -42,13 +36,8 @@ namespace Avocado
 			this.TransitionOffTime = TimeSpan.FromSeconds(1.5f);
 			this.TransitionOnTime = TimeSpan.FromSeconds(0.5f);
 
-			this.enemies = new List<Enemy>();
-			this.items = new List<Item>();
+			this.entities = new List<Entity>();
 			this.players = new List<Player>();
-			this.projectiles = new List<Projectile>();
-			
-			this.enemyHash = new SpatialHash(30);
-			this.itemHash = new SpatialHash(30);
 		}
 
 		public override void LoadContent()
@@ -64,6 +53,8 @@ namespace Avocado
 			this.players.Add(new Player(this.ScreenManager.BlankTexture, 
 				new Vector2(500, 280), 100, 0.5f));
 			this.players[0].Color = Color.Blue;
+
+			this.entities.AddRange(this.players);
 
 			// Create scrolling enivronment for level.
 			this.background = new ScrollingEnvironment(
@@ -118,35 +109,12 @@ namespace Avocado
 
 		private void ResolveCollisions()
 		{
-			this.enemyHash.Repopulate(this.enemies);
-			this.itemHash.Repopulate(this.items);
-
 			Rectangle bounds = this.ScreenManager.GraphicsDevice.Viewport.Bounds;
 
 			foreach (Player player in this.players)
 			{
 				player.Position.X = MathHelper.Clamp(player.Position.X, 0, bounds.Width);
 				player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, bounds.Height);
-
-				List<Enemy> collisionCandidates = this.spatialHash.Query(player);
-				collisionCandidates.AddRange(this.itemHash.Query(player)); 
-
-		
-				foreach (Entity entity in collisionCandidates)
-				{
-				}
-			}
-
-			foreach(Projectile projectile in this.projectiles)
-			{
-				List<Enemy> toPotentiallyBeDecimated = this.enemyHash.Query(projectile);
-
-				if (toPotentiallyBeDecimated != null)
-				{
-					forearch (Entity entity in toPotentiallyBeDecimated)
-					{
-					}
-				}
 			}
 		}
 
@@ -160,8 +128,6 @@ namespace Avocado
 
 			if (this.IsActive)
 			{		
-				this.entities
-
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
 				this.clouds.Update(gameTime);
@@ -182,10 +148,8 @@ namespace Avocado
 		public override void Draw(GameTime gameTime)
 		{
 			this.background.Draw(this.ScreenManager.SpriteBatch);
-			//this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
-			this.foreground.Draw(this.ScreenManager.SpriteBatch);
-			// TEMPORARY FOR COLLISION TESTING
 			this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
+			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 			this.clouds.Draw(this.ScreenManager.SpriteBatch);
 
 			if (this.TransitionPosition > 0 || this.pauseAlpha > 0)

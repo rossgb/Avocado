@@ -127,6 +127,7 @@
     <Compile Include="GameStateManager\MenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />
     <Compile Include="GameStateManager\PlayerIndexEventArgs.cs" />
+    <Compile Include="Entity\Projectile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
