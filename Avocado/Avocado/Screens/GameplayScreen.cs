@@ -65,9 +65,6 @@ namespace Avocado
 				new Vector2(500, 280), 100, 0.5f));
 			this.players[0].Color = Color.Blue;
 
-			// Add players to entities.
-			this.entities.AddRange(this.players);
-
 			// Create scrolling enivronment for level.
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
@@ -131,15 +128,25 @@ namespace Avocado
 				player.Position.X = MathHelper.Clamp(player.Position.X, 0, bounds.Width);
 				player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, bounds.Height);
 
-				List<Entity> collisionCandidates = this.spatialHash.Query(player);
-				
-				// Resolve collisions!
+				List<Enemy> collisionCandidates = this.spatialHash.Query(player);
+				collisionCandidates.AddRange(this.itemHash.Query(player)); 
+
+		
+				foreach (Entity entity in collisionCandidates)
+				{
+				}
 			}
 
 			foreach(Projectile projectile in this.projectiles)
 			{
 				List<Enemy> toPotentiallyBeDecimated = this.enemyHash.Query(projectile);
-				// Decimate enemies here.
+
+				if (toPotentiallyBeDecimated != null)
+				{
+					forearch (Entity entity in toPotentiallyBeDecimated)
+					{
+					}
+				}
 			}
 		}
 
