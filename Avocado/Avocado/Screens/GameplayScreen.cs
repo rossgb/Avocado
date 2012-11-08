@@ -42,10 +42,10 @@ namespace Avocado
 			this.TransitionOffTime = TimeSpan.FromSeconds(1.5f);
 			this.TransitionOnTime = TimeSpan.FromSeconds(0.5f);
 
-			this.enemies = new List<Enemies();
+			this.enemies = new List<Enemy>();
 			this.items = new List<Item>();
 			this.players = new List<Player>();
-			this.projectiles = new List<Projectiles>();
+			this.projectiles = new List<Projectile>();
 			
 			this.enemyHash = new SpatialHash(30);
 			this.itemHash = new SpatialHash(30);
