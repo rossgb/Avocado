@@ -28,7 +28,7 @@ namespace Avocado
 		#region Public methods
 
 		public void Clear()
-		{
+		{ 
 			this.map.Clear();
 		}
 
@@ -52,17 +52,15 @@ namespace Avocado
 			entities.ForEach(entity => this.Insert(entity));
 		}
 
-		public List<V> Query(V entity)
+		public List<V> Query(Entity entity)
 		{
 			List<V> collisionCandidates = new List<V>();
 			List<V> candidatesInCell;
+			Vector2 key = new Vector2();
 
 			int offset = Math.Max(1, entity.Radius / this.cellSize);
 			int x = (int) entity.Position.X / this.cellSize;
 			int y = (int) entity.Position.Y / this.cellSize;
-			Vector2 key = new Vector2(x, y);
-
-			this.map[key].Remove(entity);
 
 			for (int i = x - offset; i <= x + offset; i++)
 			{

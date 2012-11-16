@@ -21,9 +21,16 @@ namespace Avocado
 		float scrollVelocity;
 		float pauseAlpha;
 
+		List<Enemy> enemies;
+		List<Entity> entities;
+		List<Item> items;
 		List<Player> players;
 		List<Projectile> projectiles;
-		List<Entity> entities;
+
+		SpatialHash<Enemy> enemyMap;
+		SpatialHash<Item> itemMap;
+
+		const int cellSize = 30;
 
 		#endregion
 
@@ -36,8 +43,14 @@ namespace Avocado
 			this.TransitionOffTime = TimeSpan.FromSeconds(1.5f);
 			this.TransitionOnTime = TimeSpan.FromSeconds(0.5f);
 
+			this.enemies = new List<Enemy>();
 			this.entities = new List<Entity>();
+			this.items = new List<Item>();
 			this.players = new List<Player>();
+			this.projectiles = new List<Projectile>();
+
+			this.enemyMap = new SpatialHash<Enemy>(cellSize);
+			this.itemMap = new SpatialHash<Item>(cellSize);
 		}
 
 		public override void LoadContent()
@@ -109,12 +122,53 @@ namespace Avocado
 
 		private void ResolveCollisions()
 		{
+			// Rebuild spatial hash.
+			this.enemyMap.Repopulate(this.enemies);
+			this.itemMap.Repopulate(this.items);
+
 			Rectangle bounds = this.ScreenManager.GraphicsDevice.Viewport.Bounds;
 
+			// Check player collisions with players, enemies, and items.
 			foreach (Player player in this.players)
 			{
+				// Clamp players to screen.
 				player.Position.X = MathHelper.Clamp(player.Position.X, 0, bounds.Width);
 				player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, bounds.Height);
+
+				// Players.
+				foreach (Player other in this.players)
+				{
+					if (player == other)
+					{
+						continue;
+					}
+
+					if (Vector2.Distance(player.Position, other.Position) <= player.Radius + other.Radius)
+					{
+						Collision.resolve(player, other);
+					}
+				}
+
+				// Enemies.
+				foreach (Enemy enemy in this.enemyMap.Query(player))
+				{
+					Collision.resolve(player, enemy);
+				}
+
+				// Items.
+				foreach (Item item in this.itemMap.Query(player))
+				{
+					Collision.resolve(player, item);
+				}
+			}
+
+			// Check projectile collisions with enemies.
+			foreach (Projectile projectile in this.projectiles)
+			{
+				foreach (Enemy enemy in this.enemyMap.Query(projectile))
+				{
+					Collision.resolve(projectile, enemy);
+				}
 			}
 		}
 
@@ -131,6 +185,13 @@ namespace Avocado
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
 				this.clouds.Update(gameTime);
+
+				// Rebuild entity list.
+				this.entities.Clear();
+				this.entities.AddRange(this.enemies);
+				this.entities.AddRange(this.items);
+				this.entities.AddRange(this.players);
+				this.entities.AddRange(this.projectiles);
 
 				foreach (Entity entity in this.entities)
 				{

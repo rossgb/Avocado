@@ -33,6 +33,8 @@ namespace Avocado
 			this.Body = new Rectangle(0, 0, this.Radius * 2, this.Radius * 2);
 		}
 
+		#region Update and Draw
+
 		public virtual void Update(GameTime gameTime)
 		{
 			this.Position += this.Direction * this.speed * gameTime.ElapsedGameTime.Milliseconds;
@@ -42,5 +44,7 @@ namespace Avocado
 		{
 			spriteBatch.Draw(this.texture, this.Position + this.drawOffset, this.Body, this.Color);
 		}
+
+		#endregion
 	}
 }
