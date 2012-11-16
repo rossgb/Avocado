@@ -76,7 +76,11 @@ namespace Avocado
 				}
 			}
 
-			return collisionCandidates.Count > 0 ? collisionCandidates : null;
+			var list = from candidate in collisionCandidates 
+					   where Vector2.Distance(candidate.Position, entity.Position) <= (candidate.Radius + entity.Radius) 
+					   select candidate;
+
+			return list.ToList<V>();
 		}
 
 		#endregion

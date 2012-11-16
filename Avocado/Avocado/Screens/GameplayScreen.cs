@@ -149,26 +149,15 @@ namespace Avocado
 					}
 				}
 
-				// Enemies.
-				foreach (Enemy enemy in this.enemyMap.Query(player))
-				{
-					Collision.resolve(player, enemy);
-				}
-
-				// Items.
-				foreach (Item item in this.itemMap.Query(player))
-				{
-					Collision.resolve(player, item);
-				}
+				// Resolve enemy and item collisions.
+				this.enemyMap.Query(player).ForEach(enemy => Collision.resolve(player, enemy));
+				this.itemMap.Query(player).ForEach(item => Collision.resolve(player, item));
 			}
 
 			// Check projectile collisions with enemies.
 			foreach (Projectile projectile in this.projectiles)
 			{
-				foreach (Enemy enemy in this.enemyMap.Query(projectile))
-				{
-					Collision.resolve(projectile, enemy);
-				}
+				this.enemyMap.Query(projectile).ForEach(enemy => Collision.resolve(projectile, enemy));
 			}
 		}
 
@@ -185,6 +174,17 @@ namespace Avocado
 				this.background.Update(gameTime);
 				this.foreground.Update(gameTime);
 				this.clouds.Update(gameTime);
+
+				Rectangle bounds = this.ScreenManager.GraphicsDevice.Viewport.Bounds;
+
+				// Remove entities that have traveled offscreen.
+				this.enemies.RemoveAll(enemy => enemy.Position.X + enemy.Radius < 0);
+				this.items.RemoveAll(item => item.Position.X + item.Radius < 0);
+				this.projectiles.RemoveAll(projectile =>
+					projectile.Position.X + projectile.Radius < 0 ||
+					projectile.Position.Y + projectile.Radius < 0 ||
+					projectile.Position.X - projectile.Radius > bounds.Width ||
+					projectile.Position.Y - projectile.Radius < bounds.Height);
 
 				// Rebuild entity list.
 				this.entities.Clear();
