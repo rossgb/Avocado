@@ -7,14 +7,21 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Avocado
 {
+
 	public class Player : Entity
 	{
 		int health;
+		public bool firing;
+		public double timeSinceLastShot;
+		public double reloadTime;
 
 		public Player(Texture2D texture, Vector2 position, int health, float speed) : 
 			base(texture, position, speed)
 		{
 			this.health = health;
+			this.firing = false;
+			this.reloadTime = 0.5;
+			this.timeSinceLastShot = 0.0;
 		}
 
 		public void HandleInput(InputState input, int index)
@@ -46,6 +53,12 @@ namespace Avocado
 			{
 				this.Direction.Normalize();
 			}
+			
+			//fire ze missiles
+			if (keyboardState.IsKeyDown(index == 0 ? Keys.Space : Keys.NumPad0))
+				this.firing = true;
+			else
+				this.firing = false;
 		}
 	}
 }

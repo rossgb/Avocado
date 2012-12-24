@@ -38,7 +38,7 @@ namespace Avocado
 
 		#endregion
 
-																																						#region Initialization
+		#region Initialization
 
 
 		/// <summary>

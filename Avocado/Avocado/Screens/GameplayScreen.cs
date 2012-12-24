@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics; //REMOVE ME
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -161,6 +162,35 @@ namespace Avocado
 			}
 		}
 
+		private void ResolveCombat(GameTime gametime)
+		{
+
+			foreach (Player player in this.players)
+			{
+				if (gametime.TotalGameTime.TotalSeconds - player.timeSinceLastShot < player.reloadTime)
+				{
+					continue;
+				}
+				if (player.firing)
+				{
+					Projectile projectile = new Projectile(this.ScreenManager.BlankTexture,
+						new Vector2(player.Position.X,player.Position.Y), 1.0f);
+
+					projectile.Direction = (player.Direction.X == 0 && player.Direction.Y == 0) ?
+						new Vector2(1.0f, 0.0f) :
+						new Vector2(player.Direction.X, player.Direction.Y);
+
+					player.timeSinceLastShot = gametime.TotalGameTime.TotalSeconds;
+
+					projectile.Color = Color.DarkMagenta;
+					projectile.Radius = 5;
+
+					this.projectiles.Add(projectile);
+					this.entities.Add(projectile);
+				}
+			}
+		}
+
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
 		{
 			base.Update(gameTime, otherScreenHasFocus, false);
@@ -180,12 +210,13 @@ namespace Avocado
 				// Remove entities that have traveled offscreen.
 				this.enemies.RemoveAll(enemy => enemy.Position.X + enemy.Radius < 0);
 				this.items.RemoveAll(item => item.Position.X + item.Radius < 0);
+				
 				this.projectiles.RemoveAll(projectile =>
 					projectile.Position.X + projectile.Radius < 0 ||
 					projectile.Position.Y + projectile.Radius < 0 ||
 					projectile.Position.X - projectile.Radius > bounds.Width ||
-					projectile.Position.Y - projectile.Radius < bounds.Height);
-
+					projectile.Position.Y - projectile.Radius > bounds.Height);
+				
 				// Rebuild entity list.
 				this.entities.Clear();
 				this.entities.AddRange(this.enemies);
@@ -200,6 +231,7 @@ namespace Avocado
 				}
 
 				this.ResolveCollisions();
+				this.ResolveCombat(gameTime);
 
 				// Sort entities by Y position to draw in correct order.
 				this.entities.Sort((a, b) => a.Position.Y.CompareTo(b.Position.Y));
