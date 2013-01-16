@@ -183,7 +183,7 @@ namespace Avocado
 					player.timeSinceLastShot = gametime.TotalGameTime.TotalSeconds;
 
 					projectile.Color = Color.DarkMagenta;
-					projectile.Radius = 5;
+					projectile.Radius = 10;
 
 					this.projectiles.Add(projectile);
 					this.entities.Add(projectile);
