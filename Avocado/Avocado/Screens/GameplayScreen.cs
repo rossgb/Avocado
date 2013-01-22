@@ -31,6 +31,8 @@ namespace Avocado
 		SpatialHash<Enemy> enemyMap;
 		SpatialHash<Item> itemMap;
 
+        Factory enemyFactory;
+
 		const int cellSize = 30;
 
 		#endregion
@@ -52,6 +54,8 @@ namespace Avocado
 
 			this.enemyMap = new SpatialHash<Enemy>(cellSize);
 			this.itemMap = new SpatialHash<Item>(cellSize);
+
+            this.enemyFactory = new Factory();
 		}
 
 		public override void LoadContent()
@@ -63,9 +67,9 @@ namespace Avocado
 
 			// Create players.
 			this.players.Add(new Player(this.ScreenManager.BlankTexture,
-				new Vector2(500, 300), 100, 0.5f));
+				new Vector2(500, 300), 100, 0.5f, 25));
 			this.players.Add(new Player(this.ScreenManager.BlankTexture, 
-				new Vector2(500, 280), 100, 0.5f));
+				new Vector2(500, 280), 100, 0.5f, 25));
 			this.players[0].Color = Color.Blue;
 
 			this.entities.AddRange(this.players);
@@ -82,6 +86,8 @@ namespace Avocado
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
 
 			this.ScreenManager.Game.ResetElapsedTime();
+
+			this.TempMakeEnemy();
 		}
 
 		public override void UnloadContent()
@@ -174,7 +180,7 @@ namespace Avocado
 				if (player.firing)
 				{
 					Projectile projectile = new Projectile(this.ScreenManager.BlankTexture,
-						new Vector2(player.Position.X,player.Position.Y), 1.0f);
+						new Vector2(player.Position.X,player.Position.Y), 1.0f, 10);
 
 					projectile.Direction = (player.Direction.X == 0 && player.Direction.Y == 0) ?
 						new Vector2(1.0f, 0.0f) :
@@ -189,6 +195,12 @@ namespace Avocado
 					this.entities.Add(projectile);
 				}
 			}
+		}
+
+		private void TempMakeEnemy() // TEMPORARY
+		{
+			//string = x y health speed
+			enemies.Add(enemyFactory.grabEnemy("1500 500 50 2", this.content.Load<Texture2D>("Character/PlayerStand")));
 		}
 
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)

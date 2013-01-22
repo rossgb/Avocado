@@ -5,8 +5,8 @@ namespace Avocado
 {
 	class Projectile : Entity
 	{
-		public Projectile(Texture2D texture, Vector2 position, float speed) :
-			base(texture, position, speed)
+		public Projectile(Texture2D texture, Vector2 position, float speed, int radius) :
+			base(texture, position, speed, radius)
 		{
 		}
 	}

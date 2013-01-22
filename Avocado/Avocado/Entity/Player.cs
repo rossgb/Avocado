@@ -15,8 +15,8 @@ namespace Avocado
 		public double timeSinceLastShot;
 		public double reloadTime;
 
-		public Player(Texture2D texture, Vector2 position, int health, float speed) : 
-			base(texture, position, speed)
+		public Player(Texture2D texture, Vector2 position, int health, float speed, int radius) : 
+			base(texture, position, speed, radius)
 		{
 			this.health = health;
 			this.firing = false;

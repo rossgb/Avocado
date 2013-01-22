@@ -20,10 +20,10 @@ namespace Avocado
 		public Rectangle Body;
 		public Color Color;
 
-		public Entity(Texture2D texture, Vector2 position, float speed)
+		public Entity(Texture2D texture, Vector2 position, float speed, int radius)
 		{
 			this.Position = position;
-			this.Radius = 25;
+			this.Radius = radius;
 
 			this.drawOffset = new Vector2(-this.Radius, -this.Radius);
 			this.speed = speed;
