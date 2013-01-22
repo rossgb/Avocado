@@ -7,9 +7,8 @@ namespace Avocado
 	{
 		public static void resolve(Player player1, Player player2)
 		{
-
             Vector2 distance = player2.Position - player1.Position;
-            float overlap = player1.Radius + player2.Radius - distance.Length();
+            float overlap = (player1.Radius + player2.Radius - distance.Length()) / 2.0f;
             double angle = (float) Math.Atan2(distance.Y, distance.X);
 
             player1.Position.X -= (float) (overlap * Math.Cos(angle));
