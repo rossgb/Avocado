@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="Entity\Coin.cs" />
     <Compile Include="Enemy Factory\Factory.cs" />
-    <Compile Include="Game\Collision.cs" />
     <Compile Include="Entity\Enchantment.cs" />
     <Compile Include="Entity\Enemy.cs" />
     <Compile Include="Entity\Entity.cs" />

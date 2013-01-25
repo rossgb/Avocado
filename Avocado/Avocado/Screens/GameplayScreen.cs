@@ -183,12 +183,15 @@ namespace Avocado
                 });
 			}
 
+            List<Projectile> projectilesToRemove = new List<Projectile>();
+
 			// Check projectile collisions with enemies.
 			foreach (Projectile projectile in this.projectiles)
 			{
                 this.enemyMap.Query(projectile).ForEach(enemy => 
                 {
                     enemy.health -= projectile.damage;
+                    projectilesToRemove.Add(projectile);
 
                     if (enemy.health <= 0)
                     {
@@ -197,6 +200,12 @@ namespace Avocado
                     }
                 });
 			}
+
+            // Remove projectiles that have collided with an enemy.
+            foreach (Projectile projectile in projectilesToRemove)
+            {
+                this.projectiles.Remove(projectile);
+            }
 		}
 
 		private void ResolveCombat(GameTime gametime)
@@ -231,7 +240,7 @@ namespace Avocado
 		private void TempMakeEnemy() // TEMPORARY
 		{
 			//string = x y health speed
-			enemies.Add(enemyFactory.grabEnemy("1500 500 50 2", this.content.Load<Texture2D>("Character/PlayerStand")));
+			enemies.Add(enemyFactory.grabEnemy("1500 500 3 2", this.content.Load<Texture2D>("Character/PlayerStand")));
 		}
 
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
