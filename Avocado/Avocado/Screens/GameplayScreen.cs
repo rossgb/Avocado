@@ -146,19 +146,50 @@ namespace Avocado
 
 					if (Vector2.Distance(player.Position, other.Position) <= player.Radius + other.Radius)
 					{
-						Collision.resolve(player, other);
+                        Vector2 distance = other.Position - player.Position;
+                        float overlap = (player.Radius + other.Radius - distance.Length()) / 2.0f;
+                        double angle = (float)Math.Atan2(distance.Y, distance.X);
+
+                        player.Position.X -= (float)(overlap * Math.Cos(angle));
+                        player.Position.Y -= (float)(overlap * Math.Sin(angle));
+                        other.Position.X += (float)(overlap * Math.Cos(angle));
+                        other.Position.Y += (float)(overlap * Math.Sin(angle));
 					}
 				}
 
-				// Resolve enemy and item collisions.
-				this.enemyMap.Query(player).ForEach(enemy => Collision.resolve(player, enemy));
-				this.itemMap.Query(player).ForEach(item => Collision.resolve(player, item));
+				// Resolve enemy collisions.
+                this.enemyMap.Query(player).ForEach(enemy =>
+                {
+                    // drop player's coins...
+                });
+                
+                // Resolve item collisions.
+                this.itemMap.Query(player).ForEach(item =>
+                {
+                    if (item is Coin)
+                    {
+                        player.score += ((Coin) item).value;
+                    }
+                    else if (item is Enchantment)
+                    {
+                        // do something cool...
+                    }
+                });
 			}
 
 			// Check projectile collisions with enemies.
 			foreach (Projectile projectile in this.projectiles)
 			{
-				this.enemyMap.Query(projectile).ForEach(enemy => Collision.resolve(projectile, enemy));
+                this.enemyMap.Query(projectile).ForEach(enemy => 
+                {
+                    enemy.health -= projectile.damage;
+
+                    if (enemy.health <= 0)
+                    {
+                        // drop coins and items and other such deathiness.
+                        this.enemies.Remove(enemy);
+                    }
+                });
 			}
 		}
 
@@ -174,7 +205,7 @@ namespace Avocado
 				if (player.firing)
 				{
 					Projectile projectile = new Projectile(this.ScreenManager.BlankTexture,
-						new Vector2(player.Position.X,player.Position.Y), 1.0f);
+						new Vector2(player.Position.X,player.Position.Y), 1.0f, player.damage);
 
 					projectile.Direction = (player.Direction.X == 0 && player.Direction.Y == 0) ?
 						new Vector2(1.0f, 0.0f) :
@@ -210,7 +241,6 @@ namespace Avocado
 				// Remove entities that have traveled offscreen.
 				this.enemies.RemoveAll(enemy => enemy.Position.X + enemy.Radius < 0);
 				this.items.RemoveAll(item => item.Position.X + item.Radius < 0);
-				
 				this.projectiles.RemoveAll(projectile =>
 					projectile.Position.X + projectile.Radius < 0 ||
 					projectile.Position.Y + projectile.Radius < 0 ||

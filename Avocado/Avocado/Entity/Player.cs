@@ -10,10 +10,12 @@ namespace Avocado
 
 	public class Player : Entity
 	{
-		int health;
+		public int health;
 		public bool firing;
 		public double timeSinceLastShot;
 		public double reloadTime;
+        public int damage;
+        public int score;
 
 		public Player(Texture2D texture, Vector2 position, int health, float speed) : 
 			base(texture, position, speed)
@@ -22,6 +24,8 @@ namespace Avocado
 			this.firing = false;
 			this.reloadTime = 0.5;
 			this.timeSinceLastShot = 0.0;
+            this.damage = 1;
+            this.score = 0;
 		}
 
 		public void HandleInput(InputState input, int index)

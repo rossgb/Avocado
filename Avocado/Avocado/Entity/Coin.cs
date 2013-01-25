@@ -5,9 +5,12 @@ namespace Avocado
 {
 	class Coin : Item
 	{
-		public Coin(Texture2D texture, Vector2 position, float speed) :
+        public int value;
+
+		public Coin(Texture2D texture, Vector2 position, float speed, int value) :
 			base(texture, position, speed)
 		{
+            this.value = value;
 		}
 	}
 }
