@@ -7,8 +7,8 @@ namespace Avocado
 	{
         public int value;
 
-		public Coin(Texture2D texture, Vector2 position, float speed, int value) :
-			base(texture, position, speed)
+		public Coin(Texture2D texture, Vector2 position, float speed, int radius, int value) :
+			base(texture, position, speed, radius)
 		{
             this.value = value;
 		}

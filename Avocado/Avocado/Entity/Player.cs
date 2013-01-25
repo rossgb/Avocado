@@ -17,8 +17,8 @@ namespace Avocado
         public int damage;
         public int score;
 
-		public Player(Texture2D texture, Vector2 position, int health, float speed) : 
-			base(texture, position, speed)
+		public Player(Texture2D texture, Vector2 position, int health, float speed, int radius) : 
+			base(texture, position, speed, radius)
 		{
 			this.health = health;
 			this.firing = false;
