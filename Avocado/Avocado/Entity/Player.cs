@@ -25,7 +25,7 @@ namespace Avocado
 			this.reloadTime = 0.5;
 			this.timeSinceLastShot = 0.0;
             this.damage = 1;
-            this.score = 0;
+            this.score = 100;
 		}
 
 		public void HandleInput(InputState input, int index)
