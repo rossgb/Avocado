@@ -17,6 +17,7 @@ namespace Avocado
         public int damage;
         public int score;
 
+
 		public Player(Texture2D texture, Vector2 position, int health, float speed, int radius) : 
 			base(texture, position, speed, radius)
 		{
@@ -34,29 +35,39 @@ namespace Avocado
 			KeyboardState keyboardState = input.CurrentKeyboardStates[index];
 			GamePadState gamePadState = input.CurrentGamePadStates[index];
 
-			this.Direction = Vector2.Zero;
-			
-			// XBox controller input.
+			Vector2 direction = Vector2.Zero;
+
+			// XBox controller input. 
 			this.Direction.X += gamePadState.ThumbSticks.Left.X;
 			this.Direction.Y -= gamePadState.ThumbSticks.Left.Y;
 
 			// Hacky keyboard input for development purposes.
 			if (keyboardState.IsKeyDown(index == 0 ? Keys.A : Keys.Left))
-				this.Direction.X--;
+				direction.X--;
 
 			if (keyboardState.IsKeyDown(index == 0 ? Keys.D : Keys.Right))
-				this.Direction.X++;
+				direction.X++;
 
 			if (keyboardState.IsKeyDown(index == 0 ? Keys.W : Keys.Up))
-				this.Direction.Y--;
+				direction.Y--;
 
 			if (keyboardState.IsKeyDown(index == 0 ? Keys.S : Keys.Down))
-				this.Direction.Y++;
+				direction.Y++;
 
 			// Normalization only necessary for keyboard input.
-			if (this.Direction.Length() > 1.0f)
+			if (direction.Length() > 1.0f)
 			{
-				this.Direction.Normalize();
+				direction.Normalize();
+			}
+
+			if (direction.Length() == 0)
+			{
+				this.IsMoving = false;
+			}
+			else
+			{
+				this.Direction = direction;
+				this.IsMoving = true;
 			}
 			
 			//fire ze missiles

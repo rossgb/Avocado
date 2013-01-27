@@ -16,6 +16,7 @@ namespace Avocado
 		public Vector2 Position;
 		public int Radius;
 		public float Speed;
+		public bool IsMoving;
  
 		public Rectangle Body;
 		public Color Color;
@@ -33,6 +34,7 @@ namespace Avocado
 
 			this.Color = Color.White;
 			this.Body = new Rectangle(0, 0, this.Radius * 2, this.Radius * 2);
+			this.IsMoving = true;
 		}
 
 		#region Update and Draw
@@ -40,7 +42,9 @@ namespace Avocado
 		public virtual void Update(GameTime gameTime)
 		{
             rotation = (float)Math.Atan2(Direction.Y, Direction.X);
-			this.Position += this.Direction * this.Speed * gameTime.ElapsedGameTime.Milliseconds;
+			
+			if (this.IsMoving)
+				this.Position += this.Direction * this.Speed * gameTime.ElapsedGameTime.Milliseconds;
 		}
 
 		public virtual void Draw(SpriteBatch spriteBatch)
