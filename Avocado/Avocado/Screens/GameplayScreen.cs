@@ -71,6 +71,7 @@ namespace Avocado
 			this.players.Add(new Player(this.ScreenManager.BlankTexture, 
 				new Vector2(500, 280), 100, 0.5f, 25));
 			this.players[0].Color = Color.Blue;
+            this.players[1].Color = Color.Red;
 
 			this.entities.AddRange(this.players);
 
@@ -125,9 +126,9 @@ namespace Avocado
 
 		#endregion
 
-		#region Update and Draw
+        #region Game Logic
 
-		private void ResolveCollisions()
+        private void ResolveCollisions()
 		{
 			// Rebuild spatial hash.
 			this.enemyMap.Repopulate(this.enemies);
@@ -143,6 +144,7 @@ namespace Avocado
 				player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, bounds.Height);
 
 				// Players.
+                
 				foreach (Player other in this.players)
 				{
 					if (player == other)
@@ -166,7 +168,14 @@ namespace Avocado
 				// Resolve enemy collisions.
                 this.enemyMap.Query(player).ForEach(enemy =>
                 {
-                    // drop player's coins...
+                    for (int i = 0; i < player.score; i++)
+                    {
+                        Random rand = new Random();
+                        Vector2 coinPos = new Vector2(player.Position.X + rand.Next(20) - 10, player.Position.Y + rand.Next(20) - 10);
+                        items.Add(new Coin(this.content.Load<Texture2D>("general/coin"),coinPos, 0.0f, 17, 1));
+
+                    }
+                    player.score = 0;
                 });
                 
                 // Resolve item collisions.
@@ -193,9 +202,10 @@ namespace Avocado
                     enemy.health -= projectile.damage;
                     projectilesToRemove.Add(projectile);
 
-                    if (enemy.health <= 0)
+                    // Kill enemy logic: destroy & drop items
+                    if (enemy.health <= 0) 
                     {
-                        // drop coins and items and other such deathiness.
+                        items.Add(new Coin(this.content.Load<Texture2D>("general/coin"),enemy.Position,0.0f,17,1));
                         this.enemies.Remove(enemy);
                     }
                 });
@@ -242,7 +252,11 @@ namespace Avocado
 			enemies.Add(enemyFactory.grabEnemy("1500 500 3 2", this.content.Load<Texture2D>("Character/playerStand")));
 		}
 
-		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
+        #endregion
+
+        #region Update and Draw
+
+        public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)
 		{
 			base.Update(gameTime, otherScreenHasFocus, false);
 

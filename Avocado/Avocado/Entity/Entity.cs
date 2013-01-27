@@ -33,7 +33,7 @@ namespace Avocado
 			this.speed = speed;
 			this.texture = texture;
 
-			this.Color = Color.Red;
+			this.Color = Color.White;
 			this.Body = new Rectangle(0, 0, this.Radius * 2, this.Radius * 2);
 		}
 
