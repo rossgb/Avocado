@@ -176,6 +176,8 @@ namespace Avocado
                     {
                         Vector2 coinPos = new Vector2(player.Position.X + rand.Next(20) - 10, player.Position.Y + rand.Next(20) - 10);
 						Vector2 coinDir = new Vector2((float)rand.NextDouble() * 2 - 1, (float)rand.NextDouble() * 2 - 1);
+						if (coinDir.Length() > 1)
+							coinDir.Normalize();
                         Coin coin = new Coin(this.content.Load<Texture2D>("general/coin"),coinPos);
                         coin.Direction = coinDir;
                         items.Add(coin);
@@ -216,11 +218,16 @@ namespace Avocado
                     if (enemy.health <= 0) 
                     {
                         Random rand = new Random();
-                        Vector2 coinPos = new Vector2(enemy.Position.X + rand.Next(20) - 10, enemy.Position.Y + rand.Next(20) - 10);
-						Vector2 coinDir = new Vector2((float)rand.NextDouble() * 2 - 1, (float)rand.NextDouble() * 2 - 1);
-                        Coin coin = new Coin(this.content.Load<Texture2D>("general/coin"), coinPos);
-                        coin.Direction = coinDir;
-                        items.Add(coin);
+						for (int i = 0; i < enemy.worth; i++)
+						{
+							Vector2 coinPos = new Vector2(enemy.Position.X + rand.Next(20) - 10, enemy.Position.Y + rand.Next(20) - 10);
+							Vector2 coinDir = new Vector2((float)rand.NextDouble() * 2 - 1, (float)rand.NextDouble() * 2 - 1);
+							if (coinDir.Length() > 1)
+								coinDir.Normalize();
+							Coin coin = new Coin(this.content.Load<Texture2D>("general/coin"), coinPos);
+							coin.Direction = coinDir;
+							items.Add(coin);
+						}
                         this.enemies.Remove(enemy);
                     }
                 });
@@ -326,6 +333,11 @@ namespace Avocado
 		{
 			this.background.Draw(this.ScreenManager.SpriteBatch);
 			this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
+
+			//health bars (NEED FIXING)
+			this.enemies.ForEach(enemy => this.ScreenManager.SpriteBatch.Draw(
+				this.ScreenManager.BlankTexture,enemy.Position + new Vector2(0f,enemy.Radius), Color.White));
+
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 			this.clouds.Draw(this.ScreenManager.SpriteBatch);
 

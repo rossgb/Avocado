@@ -25,7 +25,7 @@ namespace Avocado
 			this.reloadTime = 0.4;
 			this.timeSinceLastShot = 0.0;
             this.damage = 1;
-            this.score = 1000;
+            this.score = 0;
 			
 		}
 
@@ -60,7 +60,7 @@ namespace Avocado
 			}
 			
 			//fire ze missiles
-			if (keyboardState.IsKeyDown(index == 0 ? Keys.Space : Keys.NumPad0))
+			if (keyboardState.IsKeyDown(index == 0 ? Keys.Space : Keys.Enter))
 				this.firing = true;
 			else
 				this.firing = false;
