@@ -8,7 +8,7 @@ namespace Avocado
 
         public int damage;
 
-		public Projectile(Texture2D texture, Vector2 position, float speed, int radius, int damage) :
+		public Projectile(Texture2D texture, Vector2 position, float speed, int damage, int radius = 25) :
 			base(texture, position, speed, radius)
 		{
             this.damage = damage;

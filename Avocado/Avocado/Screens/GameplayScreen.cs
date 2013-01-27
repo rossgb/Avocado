@@ -178,8 +178,11 @@ namespace Avocado
                         coin.Direction = coinDir;
                         items.Add(coin);
                     }
+
+					//Player death
                     player.score = 0;
-                    playersToRemove.Add(player);
+					player.Position.X = 0;
+					player.Position.Y = 60;
                 });
                 
                 // Resolve item collisions.
@@ -196,11 +199,6 @@ namespace Avocado
                     items.Remove(item);
                 });
 			}
-
-            foreach (Player player in playersToRemove)
-            {
-                this.players.Remove(player);
-            }
 
             List<Projectile> projectilesToRemove = new List<Projectile>();
 
@@ -246,7 +244,7 @@ namespace Avocado
 				if (player.firing)
 				{
 					Projectile projectile = new Projectile(this.content.Load<Texture2D>("General/fireBall"),// this.ScreenManager.BlankTexture,
-                        new Vector2(player.Position.X,player.Position.Y), 1.0f, 10, player.damage);
+                        new Vector2(player.Position.X,player.Position.Y), 1.0f, player.damage);
 
 					projectile.Direction = (player.Direction.X == 0 && player.Direction.Y == 0) ?
 						new Vector2(1.0f, 0.0f) :
