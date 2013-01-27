@@ -17,8 +17,6 @@ namespace Avocado
 		public int Radius;
 		public float Speed;
  
-
-		// TEMPORARY FOR COLLISION TESTING
 		public Rectangle Body;
 		public Color Color;
 

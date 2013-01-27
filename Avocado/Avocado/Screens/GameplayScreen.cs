@@ -171,17 +171,7 @@ namespace Avocado
 				// Resolve enemy collisions.
                 this.enemyMap.Query(player).ForEach(enemy =>
                 {
-					Random rand = new Random();
-                    for (int i = 0; i < player.score; i++)
-                    {
-                        Vector2 coinPos = new Vector2(player.Position.X + rand.Next(20) - 10, player.Position.Y + rand.Next(20) - 10);
-						Vector2 coinDir = new Vector2((float)rand.NextDouble() * 2 - 1, (float)rand.NextDouble() * 2 - 1);
-						if (coinDir.Length() > 1)
-							coinDir.Normalize();
-                        Coin coin = new Coin(this.content.Load<Texture2D>("general/coin"),coinPos);
-                        coin.Direction = coinDir;
-                        items.Add(coin);
-                    }
+					spawnCoins(player.Position, player.score);
 
 					//Player death
                     player.score = 0;
@@ -217,17 +207,7 @@ namespace Avocado
                     // Kill enemy logic: destroy & drop items
                     if (enemy.health <= 0) 
                     {
-                        Random rand = new Random();
-						for (int i = 0; i < enemy.worth; i++)
-						{
-							Vector2 coinPos = new Vector2(enemy.Position.X + rand.Next(20) - 10, enemy.Position.Y + rand.Next(20) - 10);
-							Vector2 coinDir = new Vector2((float)rand.NextDouble() * 2 - 1, (float)rand.NextDouble() * 2 - 1);
-							if (coinDir.Length() > 1)
-								coinDir.Normalize();
-							Coin coin = new Coin(this.content.Load<Texture2D>("general/coin"), coinPos);
-							coin.Direction = coinDir;
-							items.Add(coin);
-						}
+						spawnCoins(enemy.Position, enemy.worth);
                         this.enemies.Remove(enemy);
                     }
                 });
@@ -238,6 +218,19 @@ namespace Avocado
             {
                 this.projectiles.Remove(projectile);
             }
+		}
+
+		private void spawnCoins(Vector2 position, int amount)
+		{
+			Random rand = new Random();
+			for (int i = 0; i < amount; i++)
+			{
+				Coin coin = new Coin(this.content.Load<Texture2D>("general/coin"), position, (float)rand.NextDouble());
+				Vector2 coinDir = new Vector2((float)rand.NextDouble() - 0.5f, (float)rand.NextDouble() - 0.5f);
+				coinDir.Normalize();
+				coin.Direction = coinDir;
+				items.Add(coin);
+			}
 		}
 
 		private void ResolveCombat(GameTime gametime)
@@ -272,11 +265,14 @@ namespace Avocado
 		{
 			//string = x y health speed
 			Random rand = new Random();
+			// TEMPORARY
 			for (int i = 1500; i < 50000; i += 350)
 			{
+				// TEMPORARY
 				string derp = i + " " + rand.Next(100, this.ScreenManager.GraphicsDevice.Viewport.Bounds.Height-100) + " 3 2";
 				enemies.Add(enemyFactory.grabEnemy(derp, this.content.Load<Texture2D>("Character/playerStand")));
 			}
+			// TEMPORARY
 		}
 
         #endregion
