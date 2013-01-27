@@ -67,12 +67,12 @@ namespace Avocado
 			}
 
 			// Create players
-			this.players.Add(new Player(this.ScreenManager.BlankTexture,
+			this.players.Add(new Player(this.content.Load<Texture2D>("Character/redWizard"),
 				new Vector2(500, 300), 100, 0.5f, 25));
-			this.players.Add(new Player(this.ScreenManager.BlankTexture, 
+            this.players.Add(new Player(this.content.Load<Texture2D>("Character/blueWizard"), 
 				new Vector2(500, 280), 100, 0.5f, 25));
-			this.players[0].Color = Color.Blue;
-            this.players[1].Color = Color.Red;
+			//this.players[0].Color = Color.Blue;
+            //this.players[1].Color = Color.Red;
 
 			this.entities.AddRange(this.players);
 
