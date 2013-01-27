@@ -146,11 +146,30 @@ namespace Avocado
 				player.Position.X = MathHelper.Clamp(player.Position.X, 0, bounds.Width);
 				player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, bounds.Height);
 
+                // Resolve item collisions.
+                this.itemMap.Query(player).ForEach(item =>
+                {
+                    if (item is Coin)
+                    {
+                        player.score += ((Coin)item).value;
+                    }
+                    else if (item is Enchantment)
+                    {
+                        // do something cool...
+                    }
+                    items.Remove(item);
+                });
+
+                // Ghosty players do not collide with other players and enemies.
+                if (player.ghosty)
+                {
+                    continue;
+                }
+
 				// Players.
-                
 				foreach (Player other in this.players)
 				{
-					if (player == other)
+					if (player == other || other.ghosty)
 					{
 						continue;
 					}
@@ -177,20 +196,6 @@ namespace Avocado
                     player.score = (int)Math.Ceiling(player.score / 2.0);
 					player.Position.X = 0;
 					player.Position.Y = 60;
-                });
-                
-                // Resolve item collisions.
-                this.itemMap.Query(player).ForEach(item =>
-                {
-                    if (item is Coin)
-                    {
-                        player.score += ((Coin) item).value;
-                    }
-                    else if (item is Enchantment)
-                    {
-                        // do something cool...
-                    }
-                    items.Remove(item);
                 });
 			}
 
@@ -238,25 +243,42 @@ namespace Avocado
 
 			foreach (Player player in this.players)
 			{
-				if (gametime.TotalGameTime.TotalSeconds - player.timeSinceLastShot < player.reloadTime)
+				if (player.timeSinceLastShot < player.reloadTime)
 				{
+                    player.timeSinceLastShot += gametime.ElapsedGameTime.Milliseconds;
 					continue;
 				}
 				if (player.firing)
 				{
+                    Vector2 direction = player.Direction;
 					Projectile projectile = new Projectile(fireTexture,
-                        player.Position+ player.Direction*player.Radius, 1.0f, player.damage);
-
-					projectile.Direction = (player.Direction.X == 0 && player.Direction.Y == 0) ?
-						new Vector2(1.0f, 0.0f) :
-						new Vector2(player.Direction.X, player.Direction.Y);
-
-					player.timeSinceLastShot = gametime.TotalGameTime.TotalSeconds;
-
-                    projectile.Color = Color.White;
+                        player.Position + direction * player.Radius, 1.0f, player.damage, direction);
 
 					this.projectiles.Add(projectile);
-					this.entities.Add(projectile);
+
+                    if (player.spellType == SpellType.RING)
+                    {
+                        // no 2x2 or 3x3 matrix in XNA so hand coding a rotation transformation.
+                        float x = (float) Math.Cos(Math.PI / 8.0f);
+                        float y = (float) Math.Sin(Math.PI / 8.0f);
+
+                        for (int i = 0; i < 15; i++)
+                        {
+                            float tmp = (float) (direction.X * x + direction.Y * -y);
+                            direction.Y = (float)(direction.X * y + direction.Y * x);
+                            direction.X = tmp;
+                            direction.Normalize();
+                            projectile = new Projectile(fireTexture,
+                                player.Position + direction * player.Radius, 1.0f, player.damage, direction);
+                            this.projectiles.Add(projectile);
+                        }
+                    }
+                    else if (player.spellType == SpellType.MULTI)
+                    {
+                        
+                    }
+
+                    player.timeSinceLastShot = 0;
 				}
 			}
 		}

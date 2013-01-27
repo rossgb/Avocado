@@ -7,22 +7,32 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Avocado
 {
+    public enum SpellType
+    {
+        SINGLE,
+        MULTI,
+        RING
+    }
+
 	public class Player : Entity
 	{
 		public int health;
 		public bool firing;
+        public bool ghosty;
 		public double timeSinceLastShot;
-		public double reloadTime;
+		public int reloadTime;
 		public int damage;
 		public int score;
-		public List<Enchantment> enchantments;
+        public SpellType spellType;
 
 		public Player(Texture2D texture, Vector2 position, int health, float speed, int radius) : 
 			base(texture, position, speed, radius)
 		{
 			this.health = health;
 			this.firing = false;
-			this.reloadTime = 0.4;
+            this.ghosty = false;
+            this.spellType = SpellType.RING;
+			this.reloadTime = 400;
 			this.timeSinceLastShot = 0.0;
 			this.damage = 1;
 			this.score = 0;

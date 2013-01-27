@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -14,11 +15,6 @@ namespace Avocado
 {
 	public class Factory
 	{
-		public Factory()
-		{
-
-		}
-
 		public Enemy grabEnemy(String text,Texture2D texture)
 		{
 			//string = x y health speed
@@ -30,6 +26,7 @@ namespace Avocado
 			Enemy nextEnemy = new Enemy(texture,new Vector2(x,y),health,speed,50);
 			nextEnemy.Radius = 50;
 			nextEnemy.Color = Color.White;
+            Debug.WriteLine("yay");
 			return nextEnemy;
 		}
 	}
