@@ -22,17 +22,18 @@ namespace Avocado
 		{
 			this.health = health;
 			this.firing = false;
-			this.reloadTime = 0.5;
+			this.reloadTime = 0.4;
 			this.timeSinceLastShot = 0.0;
             this.damage = 1;
-            this.score = 100;
+            this.score = 1000;
+			
 		}
 
 		public void HandleInput(InputState input, int index)
 		{
 			KeyboardState keyboardState = input.CurrentKeyboardStates[index];
 			GamePadState gamePadState = input.CurrentGamePadStates[index];
-            
+
 			this.Direction = Vector2.Zero;
 			
 			// XBox controller input.

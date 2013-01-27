@@ -32,6 +32,7 @@ namespace Avocado
 		SpatialHash<Item> itemMap;
 
         Factory enemyFactory;
+		Texture2D fireTexture;
 
 		const int cellSize = 30;
 
@@ -65,7 +66,7 @@ namespace Avocado
 				this.content = new ContentManager(this.ScreenManager.Game.Services, "Content");
 			}
 
-			// Create players.
+			// Create players
 			this.players.Add(new Player(this.ScreenManager.BlankTexture,
 				new Vector2(500, 300), 100, 0.5f, 25));
 			this.players.Add(new Player(this.ScreenManager.BlankTexture, 
@@ -89,6 +90,7 @@ namespace Avocado
 			this.ScreenManager.Game.ResetElapsedTime();
 
 			this.TempMakeEnemy();
+			this.fireTexture = this.content.Load<Texture2D>("General/fireBall");
 		}
 
 		public override void UnloadContent()
@@ -213,7 +215,6 @@ namespace Avocado
                     // Kill enemy logic: destroy & drop items
                     if (enemy.health <= 0) 
                     {
-                        //items.Add(new Coin(this.content.Load<Texture2D>("general/coin"),enemy.Position,0.0f,17,1));
                         Random rand = new Random();
                         Vector2 coinPos = new Vector2(enemy.Position.X + rand.Next(20) - 10, enemy.Position.Y + rand.Next(20) - 10);
 						Vector2 coinDir = new Vector2((float)rand.NextDouble() * 2 - 1, (float)rand.NextDouble() * 2 - 1);
@@ -243,8 +244,8 @@ namespace Avocado
 				}
 				if (player.firing)
 				{
-					Projectile projectile = new Projectile(this.content.Load<Texture2D>("General/fireBall"),// this.ScreenManager.BlankTexture,
-                        new Vector2(player.Position.X,player.Position.Y), 1.0f, player.damage);
+					Projectile projectile = new Projectile(fireTexture,
+                        player.Position+ player.Direction*player.Radius, 1.0f, player.damage);
 
 					projectile.Direction = (player.Direction.X == 0 && player.Direction.Y == 0) ?
 						new Vector2(1.0f, 0.0f) :
@@ -264,7 +265,7 @@ namespace Avocado
 		{
 			//string = x y health speed
 			Random rand = new Random();
-			for (int i = 1500; i < 50000; i += 600)
+			for (int i = 1500; i < 50000; i += 350)
 			{
 				string derp = i + " " + rand.Next(100, this.ScreenManager.GraphicsDevice.Viewport.Bounds.Height-100) + " 3 2";
 				enemies.Add(enemyFactory.grabEnemy(derp, this.content.Load<Texture2D>("Character/playerStand")));
@@ -327,6 +328,12 @@ namespace Avocado
 			this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 			this.clouds.Draw(this.ScreenManager.SpriteBatch);
+
+			//get text ready for score drawing
+			SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+			SpriteFont font = ScreenManager.Font;
+			spriteBatch.DrawString(font,players[0].score.ToString(),new Vector2(10, 30),Color.Blue);
+			spriteBatch.DrawString(font, players[1].score.ToString(), new Vector2(10, 0), Color.Red);
 
 			if (this.TransitionPosition > 0 || this.pauseAlpha > 0)
 			{
