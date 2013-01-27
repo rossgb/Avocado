@@ -19,7 +19,6 @@ namespace Avocado
 
 		}
 
-
 		public Enemy grabEnemy(String text,Texture2D texture)
 		{
 			//string = x y health speed

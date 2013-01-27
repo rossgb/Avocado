@@ -11,10 +11,12 @@ namespace Avocado
 		Texture2D texture;
 		Vector2 drawOffset;
 		float speed;
+        float rotation;
 
 		public Vector2 Direction;
 		public Vector2 Position;
 		public int Radius;
+ 
 
 		// TEMPORARY FOR COLLISION TESTING
 		public Rectangle Body;
@@ -24,6 +26,8 @@ namespace Avocado
 		{
 			this.Position = position;
 			this.Radius = radius;
+
+            rotation = (float)Math.Atan2(Direction.Y , Direction.X);
 
 			this.drawOffset = new Vector2(-this.Radius, -this.Radius);
 			this.speed = speed;
@@ -37,12 +41,14 @@ namespace Avocado
 
 		public virtual void Update(GameTime gameTime)
 		{
+            rotation = (float)Math.Atan2(Direction.Y, Direction.X);
 			this.Position += this.Direction * this.speed * gameTime.ElapsedGameTime.Milliseconds;
 		}
 
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(this.texture, this.Position + this.drawOffset, this.Body, this.Color);
+			//spriteBatch.Draw(this.texture, this.Position + this.drawOffset, this.Body, this.Color);
+            spriteBatch.Draw(this.texture, this.Position, this.Body, this.Color, rotation,new Vector2(this.Radius,this.Radius), 1.0f, SpriteEffects.None, 0f);
 		}
 
 		#endregion

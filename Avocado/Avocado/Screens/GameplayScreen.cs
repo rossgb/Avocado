@@ -219,7 +219,7 @@ namespace Avocado
 				}
 				if (player.firing)
 				{
-					Projectile projectile = new Projectile(this.ScreenManager.BlankTexture, 
+					Projectile projectile = new Projectile(this.content.Load<Texture2D>("General/fireBall"),// this.ScreenManager.BlankTexture,
                         new Vector2(player.Position.X,player.Position.Y), 1.0f, 10, player.damage);
 
 					projectile.Direction = (player.Direction.X == 0 && player.Direction.Y == 0) ?
@@ -228,8 +228,7 @@ namespace Avocado
 
 					player.timeSinceLastShot = gametime.TotalGameTime.TotalSeconds;
 
-					projectile.Color = Color.DarkMagenta;
-					projectile.Radius = 10;
+                    projectile.Color = Color.White;
 
 					this.projectiles.Add(projectile);
 					this.entities.Add(projectile);
@@ -240,7 +239,7 @@ namespace Avocado
 		private void TempMakeEnemy() // TEMPORARY
 		{
 			//string = x y health speed
-			enemies.Add(enemyFactory.grabEnemy("1500 500 3 2", this.content.Load<Texture2D>("Character/PlayerStand")));
+			enemies.Add(enemyFactory.grabEnemy("1500 500 3 2", this.content.Load<Texture2D>("Character/playerStand")));
 		}
 
 		public override void Update(GameTime gameTime, bool otherScreenHasFocus, bool coveredByOtherScreen)

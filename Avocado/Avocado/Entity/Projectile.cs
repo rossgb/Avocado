@@ -13,5 +13,10 @@ namespace Avocado
 		{
             this.damage = damage;
 		}
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+        }
 	}
 }
