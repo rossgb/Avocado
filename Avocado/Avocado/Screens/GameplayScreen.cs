@@ -171,10 +171,10 @@ namespace Avocado
 				// Resolve enemy collisions.
                 this.enemyMap.Query(player).ForEach(enemy =>
                 {
-					spawnCoins(player.Position, player.score);
+					spawnCoins(player.Position, player.score/2);
 
 					//Player death
-                    player.score = 0;
+                    player.score = (int)Math.Ceiling(player.score / 2.0);
 					player.Position.X = 0;
 					player.Position.Y = 60;
                 });
@@ -330,12 +330,25 @@ namespace Avocado
 			this.background.Draw(this.ScreenManager.SpriteBatch);
 			this.entities.ForEach(entity => entity.Draw(this.ScreenManager.SpriteBatch));
 
-			//health bars (NEED FIXING)
-			this.enemies.ForEach(enemy => this.ScreenManager.SpriteBatch.Draw(
-				this.ScreenManager.BlankTexture,enemy.Position + new Vector2(0f,enemy.Radius), Color.White));
+
 
 			this.foreground.Draw(this.ScreenManager.SpriteBatch);
 			this.clouds.Draw(this.ScreenManager.SpriteBatch);
+
+			foreach (Enemy enemy in this.enemies)
+			{
+				int chunks = (int)(enemy.Radius * 1.0f * enemy.health / enemy.maxHealth);
+
+				this.ScreenManager.SpriteBatch.Draw(
+					this.ScreenManager.BlankTexture, enemy.Position + new Vector2(-enemy.Radius / 2, enemy.Radius),
+					new Rectangle((int)enemy.Position.X, (int)enemy.Position.Y, enemy.Radius, 3),
+					Color.White);
+
+				this.ScreenManager.SpriteBatch.Draw(
+					this.ScreenManager.BlankTexture, enemy.Position + new Vector2(-enemy.Radius / 2, enemy.Radius),
+					new Rectangle((int)enemy.Position.X, (int)enemy.Position.Y, chunks, 3),
+					Color.Red);
+			}
 
 			//get text ready for score drawing
 			SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
