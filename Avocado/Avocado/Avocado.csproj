@@ -109,16 +109,21 @@
   <ItemGroup>
     <Compile Include="Entity\Coin.cs" />
     <Compile Include="Enemy Factory\Factory.cs" />
-    <Compile Include="Entity\Enchantment.cs" />
+    <Compile Include="Entity\Avocado.cs" />
     <Compile Include="Entity\Enemy.cs" />
     <Compile Include="Entity\Entity.cs" />
     <Compile Include="Entity\Item.cs" />
     <Compile Include="Entity\Player.cs" />
+    <Compile Include="Game\Enchantment.cs" />
+    <Compile Include="Game\MultiAttackEnchantment.cs" />
+    <Compile Include="Game\RingAttackEnchantment.cs" />
     <Compile Include="Game\SpatialHash.cs" />
     <Compile Include="GameStateManager\GameScreen.cs" />
     <Compile Include="GameStateManager\InputState.cs" />
     <Compile Include="GameStateManager\ScreenManager.cs" />
     <Compile Include="Game\ScrollingEnvironment.cs" />
+    <Compile Include="Game\GhostyEnchantment.cs" />
+    <Compile Include="Game\SpeedAttackEnchantment.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

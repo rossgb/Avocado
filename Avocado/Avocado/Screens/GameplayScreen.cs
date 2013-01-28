@@ -27,6 +27,7 @@ namespace Avocado
 		List<Item> items;
 		List<Player> players;
 		List<Projectile> projectiles;
+        List<Enchantment> enchantments;
 
 		SpatialHash<Enemy> enemyMap;
 		SpatialHash<Item> itemMap;
@@ -52,6 +53,7 @@ namespace Avocado
 			this.items = new List<Item>();
 			this.players = new List<Player>();
 			this.projectiles = new List<Projectile>();
+            this.enchantments = new List<Enchantment>();
 
 			this.enemyMap = new SpatialHash<Enemy>(cellSize);
 			this.itemMap = new SpatialHash<Item>(cellSize);
@@ -153,9 +155,29 @@ namespace Avocado
                     {
                         player.score += ((Coin)item).value;
                     }
-                    else if (item is Enchantment)
+                    else if (item is Avocado)
                     {
-                        // do something cool...
+                        Avocado avo = (Avocado)item;
+                        Enchantment enchant = null;
+                        switch (avo.type)
+                        {
+                            case AvocadoType.MULTIATTACK:
+                                enchant = new MultiAttackEnchantment(player);
+                                enchantments.Add(enchant);
+                                break;
+                            case AvocadoType.RINGATTACK:
+                                enchant = new RingAttackEnchantment(player);
+                                enchantments.Add(enchant);
+                                break;
+                            case AvocadoType.SPEEDATTACK:
+                                enchant = new SpeedAttackEnchantment(player);
+                                enchantments.Add(enchant);
+                                break;
+                            case AvocadoType.GHOSTY:
+                                enchant = new GhostyEnchantment(player);
+                                enchantments.Add(enchant);
+                                break;
+                        }
                     }
                     items.Remove(item);
                 });
@@ -195,7 +217,8 @@ namespace Avocado
 					//Player death
                     player.score = (int)Math.Ceiling(player.score / 2.0);
 					player.Position.X = 0;
-					player.Position.Y = 60;
+					player.Position.Y = bounds.Height / 2;
+                    this.enchantments.Add(new GhostyEnchantment(player, 1500));
                 });
 			}
 
@@ -238,6 +261,27 @@ namespace Avocado
 			}
 		}
 
+        private void UpdateEnchants(GameTime time)
+        {
+            List<Enchantment> expiredEnchants = new List<Enchantment>();
+            this.players.ForEach(player => player.resetEnchants());
+            this.enchantments.ForEach(enchant =>
+            {
+                enchant.Update(time);
+
+                if (enchant.duration <= 0)
+                {
+                    expiredEnchants.Add(enchant);
+                }
+                else
+                {
+                    enchant.apply();
+                }
+            });
+
+            expiredEnchants.ForEach(enchant => this.enchantments.Remove(enchant));
+        }
+
 		private void ResolveCombat(GameTime gametime)
 		{
 
@@ -264,8 +308,8 @@ namespace Avocado
 
                         for (int i = 0; i < 15; i++)
                         {
-                            float tmp = (float) (direction.X * x + direction.Y * -y);
-                            direction.Y = (float)(direction.X * y + direction.Y * x);
+                            float tmp = direction.X * x - direction.Y * y;
+                            direction.Y = direction.X * y + direction.Y * x;
                             direction.X = tmp;
                             direction.Normalize();
                             projectile = new Projectile(fireTexture,
@@ -275,7 +319,26 @@ namespace Avocado
                     }
                     else if (player.spellType == SpellType.MULTI)
                     {
-                        
+                        float x = (float)Math.Cos(Math.PI / 12.0f);
+                        float y = (float)Math.Sin(Math.PI / 12.0f);
+                        float tmp = direction.X * x - direction.Y * y;
+                        direction.Y = direction.X * y + direction.Y * x;
+                        direction.X = tmp;
+                        projectile = new Projectile(fireTexture,
+                                player.Position + direction * player.Radius, 1.0f, player.damage, direction);
+
+                        this.projectiles.Add(projectile);
+
+                        x = (float) Math.Cos(Math.PI / -6.0f);
+                        y = (float) Math.Sin(Math.PI / -6.0f);
+                        tmp = direction.X * x - direction.Y * y;
+                        direction.Y = direction.X * y + direction.Y * x;
+                        direction.X = tmp;
+                        projectile = new Projectile(fireTexture,
+                                player.Position + direction * player.Radius, 1.0f, player.damage, direction);
+
+
+                        this.projectiles.Add(projectile);
                     }
 
                     player.timeSinceLastShot = 0;
@@ -292,7 +355,7 @@ namespace Avocado
 			{
 				// TEMPORARY
 				string derp = i + " " + rand.Next(100, this.ScreenManager.GraphicsDevice.Viewport.Bounds.Height-100) + " 3 2";
-				enemies.Add(enemyFactory.grabEnemy(derp, this.content.Load<Texture2D>("Character/playerStand")));
+				enemies.Add(enemyFactory.grabEnemy(derp, this.content.Load<Texture2D>("General/pumpkin")));
 			}
 			// TEMPORARY
 		}
@@ -325,7 +388,9 @@ namespace Avocado
 					projectile.Position.Y + projectile.Radius < 0 ||
 					projectile.Position.X - projectile.Radius > bounds.Width ||
 					projectile.Position.Y - projectile.Radius > bounds.Height);
-				
+
+                this.UpdateEnchants(gameTime);
+
 				// Rebuild entity list.
 				this.entities.Clear();
 				this.entities.AddRange(this.enemies);

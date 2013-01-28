@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,7 +32,7 @@ namespace Avocado
 			this.texture = texture;
 
 			this.Color = Color.White;
-			this.Body = new Rectangle(0, 0, this.Radius * 2, this.Radius * 2);
+            this.Body = new Rectangle(0, 0, this.Radius * 2, this.Radius * 2);
 			this.IsMoving = true;
 		}
 
@@ -39,15 +40,17 @@ namespace Avocado
 
 		public virtual void Update(GameTime gameTime)
 		{
-			if (this.IsMoving)
+			if (this.IsMoving) 
 				this.Position += this.Direction * this.Speed * gameTime.ElapsedGameTime.Milliseconds;
 		}
 
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
-			//spriteBatch.Draw(this.texture, this.Position + this.drawOffset, this.Body, this.Color);
+		    //spriteBatch.Draw(this.texture, this.Position + this.drawOffset, this.Body, this.Color);
             spriteBatch.Draw(this.texture, this.Position, this.Body, this.Color, (float)Math.Atan2(Direction.Y, Direction.X), new Vector2(this.Radius, this.Radius), 1.0f, SpriteEffects.None, 0f);
-		}
+            //spriteBatch.Draw(this.texture, this.Body, this.texture.Bounds, Color.White);
+            //spriteBatch.Draw(this.texture, this.Body, this.texture.Bounds, Color.White, (float)Math.Atan2(Direction.Y, Direction.X), new Vector2(2f, 2f), SpriteEffects.None, 0);
+        }
 
 		#endregion
 	}

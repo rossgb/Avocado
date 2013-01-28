@@ -24,19 +24,28 @@ namespace Avocado
 		public int damage;
 		public int score;
         public SpellType spellType;
+        private float originalSpeed;
 
 		public Player(Texture2D texture, Vector2 position, int health, float speed, int radius) : 
 			base(texture, position, speed, radius)
 		{
 			this.health = health;
 			this.firing = false;
-            this.ghosty = false;
-            this.spellType = SpellType.RING;
-			this.reloadTime = 400;
 			this.timeSinceLastShot = 0.0;
-			this.damage = 1;
 			this.score = 0;
+            this.originalSpeed = speed;
+
+            resetEnchants();
 		}
+
+        public void resetEnchants()
+        {
+            this.ghosty = false;
+            this.spellType = SpellType.SINGLE;
+            this.reloadTime = 400;
+            this.damage = 1;
+            this.Speed = this.originalSpeed;
+        }
 
 		public void HandleInput(InputState input, int index)
 		{

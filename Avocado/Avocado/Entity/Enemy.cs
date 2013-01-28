@@ -19,6 +19,6 @@ namespace Avocado
 			this.maxHealth = health;
 			this.worth = 6;
             this.IsMoving = false;
-		}
+        }
 	}
 }
