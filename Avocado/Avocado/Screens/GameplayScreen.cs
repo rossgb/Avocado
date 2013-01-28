@@ -33,7 +33,6 @@ namespace Avocado
 		SpatialHash<Item> itemMap;
 
         Factory enemyFactory;
-		Texture2D fireTexture;
 
 		const int cellSize = 30;
 
@@ -69,12 +68,12 @@ namespace Avocado
 			}
 
 			// Create players
-			this.players.Add(new Player(this.ScreenManager.BlankTexture,
-				new Vector2(500, 300), 100, 0.5f, 25));
-			this.players.Add(new Player(this.ScreenManager.BlankTexture, 
-				new Vector2(500, 280), 100, 0.5f, 25));
-			this.players[0].Color = Color.Blue;
-            this.players[1].Color = Color.Red;
+			this.players.Add(new Player(this.content.Load<Texture2D>("Character/redWizard"),
+                this.content.Load<Texture2D>("General/fireBall"),
+				new Vector2(500, 300), 100, 0.5f));
+            this.players.Add(new Player(this.content.Load<Texture2D>("Character/blueWizard"),
+                this.content.Load<Texture2D>("General/iceShard"),
+				new Vector2(500, 280), 100, 0.5f));
 
 			this.entities.AddRange(this.players);
 
@@ -92,7 +91,6 @@ namespace Avocado
 			this.ScreenManager.Game.ResetElapsedTime();
 
 			this.TempMakeEnemy();
-			this.fireTexture = this.content.Load<Texture2D>("General/fireBall");
 		}
 
 		public override void UnloadContent()
@@ -295,7 +293,7 @@ namespace Avocado
 				if (player.firing)
 				{
                     Vector2 direction = player.Direction;
-					Projectile projectile = new Projectile(fireTexture,
+					Projectile projectile = new Projectile(player.ProjectileTexture,
                         player.Position + direction * player.Radius, 1.0f, player.damage, direction);
 
 					this.projectiles.Add(projectile);
@@ -312,7 +310,7 @@ namespace Avocado
                             direction.Y = direction.X * y + direction.Y * x;
                             direction.X = tmp;
                             direction.Normalize();
-                            projectile = new Projectile(fireTexture,
+                            projectile = new Projectile(player.ProjectileTexture,
                                 player.Position + direction * player.Radius, 1.0f, player.damage, direction);
                             this.projectiles.Add(projectile);
                         }
@@ -324,7 +322,7 @@ namespace Avocado
                         float tmp = direction.X * x - direction.Y * y;
                         direction.Y = direction.X * y + direction.Y * x;
                         direction.X = tmp;
-                        projectile = new Projectile(fireTexture,
+                        projectile = new Projectile(player.ProjectileTexture,
                                 player.Position + direction * player.Radius, 1.0f, player.damage, direction);
 
                         this.projectiles.Add(projectile);
@@ -334,7 +332,7 @@ namespace Avocado
                         tmp = direction.X * x - direction.Y * y;
                         direction.Y = direction.X * y + direction.Y * x;
                         direction.X = tmp;
-                        projectile = new Projectile(fireTexture,
+                        projectile = new Projectile(player.ProjectileTexture,
                                 player.Position + direction * player.Radius, 1.0f, player.damage, direction);
 
 

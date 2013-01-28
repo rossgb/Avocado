@@ -44,12 +44,9 @@ namespace Avocado
 				this.Position += this.Direction * this.Speed * gameTime.ElapsedGameTime.Milliseconds;
 		}
 
-		public virtual void Draw(SpriteBatch spriteBatch)
-		{
-		    //spriteBatch.Draw(this.texture, this.Position + this.drawOffset, this.Body, this.Color);
-            spriteBatch.Draw(this.texture, this.Position, this.Body, this.Color, (float)Math.Atan2(Direction.Y, Direction.X), new Vector2(this.Radius, this.Radius), 1.0f, SpriteEffects.None, 0f);
-            //spriteBatch.Draw(this.texture, this.Body, this.texture.Bounds, Color.White);
-            //spriteBatch.Draw(this.texture, this.Body, this.texture.Bounds, Color.White, (float)Math.Atan2(Direction.Y, Direction.X), new Vector2(2f, 2f), SpriteEffects.None, 0);
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(this.texture, this.Position + this.drawOffset, this.Body, this.Color);
         }
 
 		#endregion

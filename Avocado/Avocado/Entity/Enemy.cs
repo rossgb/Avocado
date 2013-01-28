@@ -12,7 +12,7 @@ namespace Avocado
 		public int maxHealth;
 		public int worth;
 
-		public Enemy(Texture2D texture, Vector2 position, int health, float speed, int radius) : 
+		public Enemy(Texture2D texture, Vector2 position, int health, float speed, int radius = 35) : 
 			base(texture, position, speed, radius)
 		{
 			this.health = health;
