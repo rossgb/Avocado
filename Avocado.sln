@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010 Express for Windows Phone
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avocado", "Avocado\Avocado\Avocado.csproj", "{C6A8D472-A30D-4D99-86D9-14D6CCEA5F2A}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "AvocadoContent", "Avocado\AvocadoContent\AvocadoContent.contentproj", "{BBCDDA7E-F48F-4B29-8853-0B1921D24C83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvocadoContent", "Avocado\AvocadoContent\AvocadoContent.contentproj", "{BBCDDA7E-F48F-4B29-8853-0B1921D24C83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +17,7 @@ Global
 		{C6A8D472-A30D-4D99-86D9-14D6CCEA5F2A}.Release|x86.Build.0 = Release|x86
 		{BBCDDA7E-F48F-4B29-8853-0B1921D24C83}.Debug|x86.ActiveCfg = Debug|x86
 		{BBCDDA7E-F48F-4B29-8853-0B1921D24C83}.Release|x86.ActiveCfg = Release|x86
+		{BBCDDA7E-F48F-4B29-8853-0B1921D24C83}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

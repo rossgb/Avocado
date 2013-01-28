@@ -10,7 +10,7 @@
         public override void apply()
         {
             this.target.ghosty = true;
-            this.target.Speed *= 1.5f;
+            this.target.Speed *= 1.3f;
         }
     }
 }

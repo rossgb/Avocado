@@ -9,7 +9,10 @@
 
         public override void apply()
         {
-            this.target.spellType = SpellType.MULTI;
+            if (this.target.spellType == SpellType.SINGLE)
+            {
+                this.target.spellType = SpellType.MULTI;
+            }
         }
     }
 }

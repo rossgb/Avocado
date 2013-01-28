@@ -16,7 +16,7 @@ namespace Avocado
 	{
         public AvocadoType type;
 
-		public Avocado(Texture2D texture, Vector2 position, float speed, int radius) :
+		public Avocado(Texture2D texture, Vector2 position, float speed = 0.0f, int radius = 35) :
 			base(texture, position, speed, radius)
 		{
             switch (new Random().Next(4))

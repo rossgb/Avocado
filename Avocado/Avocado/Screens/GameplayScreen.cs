@@ -216,11 +216,13 @@ namespace Avocado
                     player.score = (int)Math.Ceiling(player.score / 2.0);
 					player.Position.X = 0;
 					player.Position.Y = bounds.Height / 2;
-                    this.enchantments.Add(new GhostyEnchantment(player, 1500));
+                    this.enchantments.Add(new GhostyEnchantment(player, 1000));
                 });
 			}
 
             List<Projectile> projectilesToRemove = new List<Projectile>();
+
+            Random random = new Random();
 
 			// Check projectile collisions with enemies.
 			foreach (Projectile projectile in this.projectiles)
@@ -235,6 +237,12 @@ namespace Avocado
                     {
 						spawnCoins(enemy.Position, enemy.worth);
                         this.enemies.Remove(enemy);
+
+                        if (random.Next(4) == 0)
+                        {
+                            Avocado avo = new Avocado(this.content.Load<Texture2D>("General/Avocado"), enemy.Position);
+                            this.items.Add(avo);
+                        }
                     }
                 });
 			}
@@ -293,6 +301,7 @@ namespace Avocado
 				if (player.firing)
 				{
                     Vector2 direction = player.Direction;
+                    direction.Normalize();
 					Projectile projectile = new Projectile(player.ProjectileTexture,
                         player.Position + direction * player.Radius, 1.0f, player.damage, direction);
 
@@ -438,8 +447,8 @@ namespace Avocado
 			//get text ready for score drawing
 			SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 			SpriteFont font = ScreenManager.Font;
-			spriteBatch.DrawString(font,players[0].score.ToString(),new Vector2(10, 30),Color.Blue);
-			spriteBatch.DrawString(font, players[1].score.ToString(), new Vector2(10, 0), Color.Red);
+			spriteBatch.DrawString(font,players[0].score.ToString(),new Vector2(10, 30),Color.Red);
+			spriteBatch.DrawString(font, players[1].score.ToString(), new Vector2(10, 0), Color.Blue);
 
 			if (this.TransitionPosition > 0 || this.pauseAlpha > 0)
 			{

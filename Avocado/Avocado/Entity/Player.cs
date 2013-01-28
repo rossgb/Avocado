@@ -63,8 +63,8 @@ namespace Avocado
 			Vector2 direction = Vector2.Zero;
 
 			// XBox controller input. 
-			this.Direction.X += gamePadState.ThumbSticks.Left.X;
-			this.Direction.Y -= gamePadState.ThumbSticks.Left.Y;
+			direction.X += gamePadState.ThumbSticks.Left.X;
+			direction.Y -= gamePadState.ThumbSticks.Left.Y;
 
 			// Hacky keyboard input for development purposes.
 			if (keyboardState.IsKeyDown(index == 0 ? Keys.A : Keys.Left))
@@ -105,7 +105,10 @@ namespace Avocado
                 this.Body.X = 0;
 			
 			//fire ze missiles
-			if (keyboardState.IsKeyDown(index == 0 ? Keys.Space : Keys.Enter))
+            if (gamePadState.Buttons.A == ButtonState.Pressed)
+            {
+                this.firing = true;
+            } else if (keyboardState.IsKeyDown(index == 0 ? Keys.Space : Keys.Enter))
 				this.firing = true;
 			else
 				this.firing = false;
