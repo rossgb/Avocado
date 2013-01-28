@@ -23,7 +23,7 @@ namespace Avocado
 			int y = Convert.ToInt32(tokens[1]);
 			int health = Convert.ToInt32(tokens[2]);
 			int speed = Convert.ToInt32(tokens[3]);
-			Enemy nextEnemy = new Enemy(texture,new Vector2(x,y),health,speed,50);
+			Enemy nextEnemy = new Enemy(texture,new Vector2(x,y),health,speed);
 			nextEnemy.Radius = 50;
 			nextEnemy.Color = Color.White;
             Debug.WriteLine("yay");

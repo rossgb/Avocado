@@ -32,7 +32,6 @@ namespace Avocado
 		SpatialHash<Item> itemMap;
 
         Factory enemyFactory;
-		Texture2D fireTexture;
 
 		const int cellSize = 30;
 
@@ -68,9 +67,11 @@ namespace Avocado
 
 			// Create players
 			this.players.Add(new Player(this.content.Load<Texture2D>("Character/redWizard"),
-				new Vector2(500, 300), 100, 0.5f, 25));
-            this.players.Add(new Player(this.content.Load<Texture2D>("Character/blueWizard"), 
-				new Vector2(500, 280), 100, 0.5f, 25));
+                this.content.Load<Texture2D>("General/fireBall"),
+				new Vector2(500, 300), 100, 0.5f));
+            this.players.Add(new Player(this.content.Load<Texture2D>("Character/blueWizard"),
+                this.content.Load<Texture2D>("General/iceShard"),
+				new Vector2(500, 280), 100, 0.5f));
 			//this.players[0].Color = Color.Blue;
             //this.players[1].Color = Color.Red;
 
@@ -90,7 +91,6 @@ namespace Avocado
 			this.ScreenManager.Game.ResetElapsedTime();
 
 			this.TempMakeEnemy();
-			this.fireTexture = this.content.Load<Texture2D>("General/fireBall");
 		}
 
 		public override void UnloadContent()
@@ -251,7 +251,7 @@ namespace Avocado
 				if (player.firing)
 				{
                     Vector2 direction = player.Direction;
-					Projectile projectile = new Projectile(fireTexture,
+					Projectile projectile = new Projectile(player.ProjectileTexture,
                         player.Position + direction * player.Radius, 1.0f, player.damage, direction);
 
 					this.projectiles.Add(projectile);
@@ -268,7 +268,7 @@ namespace Avocado
                             direction.Y = (float)(direction.X * y + direction.Y * x);
                             direction.X = tmp;
                             direction.Normalize();
-                            projectile = new Projectile(fireTexture,
+                            projectile = new Projectile(player.ProjectileTexture,
                                 player.Position + direction * player.Radius, 1.0f, player.damage, direction);
                             this.projectiles.Add(projectile);
                         }
@@ -292,7 +292,7 @@ namespace Avocado
 			{
 				// TEMPORARY
 				string derp = i + " " + rand.Next(100, this.ScreenManager.GraphicsDevice.Viewport.Bounds.Height-100) + " 3 2";
-				enemies.Add(enemyFactory.grabEnemy(derp, this.content.Load<Texture2D>("Character/playerStand")));
+				enemies.Add(enemyFactory.grabEnemy(derp, this.content.Load<Texture2D>("General/pumpkin")));
 			}
 			// TEMPORARY
 		}

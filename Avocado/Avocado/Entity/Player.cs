@@ -14,8 +14,12 @@ namespace Avocado
         RING
     }
 
+    
+
 	public class Player : Entity
 	{
+        
+
 		public int health;
 		public bool firing;
         public bool ghosty;
@@ -24,18 +28,22 @@ namespace Avocado
 		public int damage;
 		public int score;
         public SpellType spellType;
+        public Texture2D ProjectileTexture;
 
-		public Player(Texture2D texture, Vector2 position, int health, float speed, int radius) : 
+        float root2 = 0.70710678f;
+
+		public Player(Texture2D texture, Texture2D projectileTexture, Vector2 position, int health, float speed, int radius=50) : 
 			base(texture, position, speed, radius)
 		{
 			this.health = health;
 			this.firing = false;
             this.ghosty = false;
-            this.spellType = SpellType.RING;
+            this.spellType = SpellType.MULTI;
 			this.reloadTime = 400;
 			this.timeSinceLastShot = 0.0;
 			this.damage = 1;
 			this.score = 0;
+            this.ProjectileTexture = projectileTexture;
 		}
 
 		public void HandleInput(InputState input, int index)
@@ -77,6 +85,15 @@ namespace Avocado
 				this.Direction = direction;
 				this.IsMoving = true;
 			}
+
+            if (this.Direction.Y >= root2)
+                this.Body.X = 300;
+            else if (this.Direction.Y <= -root2)
+                this.Body.X = 100;
+            else if (this.Direction.X <= -root2)
+                this.Body.X = 200;
+            else
+                this.Body.X = 0;
 			
 			//fire ze missiles
 			if (keyboardState.IsKeyDown(index == 0 ? Keys.Space : Keys.Enter))
@@ -84,5 +101,6 @@ namespace Avocado
 			else
 				this.firing = false;
 		}
+
 	}
 }
