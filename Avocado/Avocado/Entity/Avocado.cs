@@ -16,10 +16,10 @@ namespace Avocado
 	{
         public AvocadoType type;
 
-		public Avocado(Texture2D texture, Vector2 position, float speed = 0.0f, int radius = 35) :
+		public Avocado(Texture2D texture, Vector2 position, int typeKey, float speed = 0.0f, int radius = 35) :
 			base(texture, position, speed, radius)
 		{
-            switch (new Random().Next(4))
+            switch (typeKey)
             {
                 case 0:
                     type = AvocadoType.MULTIATTACK;
@@ -30,7 +30,7 @@ namespace Avocado
                 case 2:
                     type = AvocadoType.SPEEDATTACK;
                     break;
-                case 3:
+                default:
                     type = AvocadoType.GHOSTY;
                     break;
             }

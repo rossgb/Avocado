@@ -35,6 +35,7 @@ namespace Avocado
         Factory enemyFactory;
 
 		const int cellSize = 30;
+        static Random random = new Random();
 
 		#endregion
 
@@ -222,8 +223,6 @@ namespace Avocado
 
             List<Projectile> projectilesToRemove = new List<Projectile>();
 
-            Random random = new Random();
-
 			// Check projectile collisions with enemies.
 			foreach (Projectile projectile in this.projectiles)
 			{
@@ -240,7 +239,7 @@ namespace Avocado
 
                         if (random.Next(4) == 0)
                         {
-                            Avocado avo = new Avocado(this.content.Load<Texture2D>("General/Avocado"), enemy.Position);
+                            Avocado avo = new Avocado(this.content.Load<Texture2D>("General/Avocado"), enemy.Position, random.Next(4));
                             this.items.Add(avo);
                         }
                     }
@@ -256,11 +255,10 @@ namespace Avocado
 
 		private void spawnCoins(Vector2 position, int amount)
 		{
-			Random rand = new Random();
 			for (int i = 0; i < amount; i++)
 			{
-				Coin coin = new Coin(this.content.Load<Texture2D>("general/coin"), position, (float)rand.NextDouble());
-				Vector2 coinDir = new Vector2((float)rand.NextDouble() - 0.5f, (float)rand.NextDouble() - 0.5f);
+				Coin coin = new Coin(this.content.Load<Texture2D>("general/coin"), position, (float)random.NextDouble());
+				Vector2 coinDir = new Vector2((float)random.NextDouble() - 0.5f, (float)random.NextDouble() - 0.5f);
 				coinDir.Normalize();
 				coin.Direction = coinDir;
 				items.Add(coin);
@@ -356,12 +354,11 @@ namespace Avocado
 		private void TempMakeEnemy() // TEMPORARY
 		{
 			//string = x y health speed
-			Random rand = new Random();
 			// TEMPORARY
 			for (int i = 1500; i < 50000; i += 350)
 			{
 				// TEMPORARY
-				string derp = i + " " + rand.Next(100, this.ScreenManager.GraphicsDevice.Viewport.Bounds.Height-100) + " 3 2";
+				string derp = i + " " + random.Next(100, this.ScreenManager.GraphicsDevice.Viewport.Bounds.Height-100) + " 3 2";
 				enemies.Add(enemyFactory.grabEnemy(derp, this.content.Load<Texture2D>("General/pumpkin")));
 			}
 			// TEMPORARY
