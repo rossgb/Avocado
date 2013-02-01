@@ -28,9 +28,9 @@ namespace Avocado
 		public int damage;
 		public int score;
         public SpellType spellType;
+		public int ghostOffset;
         private float originalSpeed;
         public Texture2D ProjectileTexture;
-        float root2 = 0.70710678f;
 
 		public Player(Texture2D texture, Texture2D projectileTexture, Vector2 position, int health, float speed, int radius=50) : 
 			base(texture, position, speed, radius)
@@ -53,6 +53,7 @@ namespace Avocado
             this.reloadTime = 400;
             this.damage = 1;
             this.Speed = this.originalSpeed;
+			this.ghostOffset = 0;
         }
 
 		public void HandleInput(InputState input, int index)
@@ -66,7 +67,7 @@ namespace Avocado
 			direction.X += gamePadState.ThumbSticks.Left.X;
 			direction.Y -= gamePadState.ThumbSticks.Left.Y;
 
-			// Hacky keyboard input for development purposes.
+			// keyboard input for development purposes.
 			if (keyboardState.IsKeyDown(index == 0 ? Keys.A : Keys.Left))
 				direction.X--;
 
@@ -95,14 +96,14 @@ namespace Avocado
 				this.IsMoving = true;
 			}
 
-            if (this.Direction.Y >= root2)
-                this.Body.X = 300;
-            else if (this.Direction.Y <= -root2)
-                this.Body.X = 100;
-            else if (this.Direction.X <= -root2)
-                this.Body.X = 200;
+            if (this.Direction.Y > 0)
+                this.Body.X = 300 + ghostOffset;
+            else if (this.Direction.Y < 0)
+                this.Body.X = 100 + ghostOffset;
+            else if (this.Direction.X < 0)
+                this.Body.X = 200 + ghostOffset;
             else
-                this.Body.X = 0;
+                this.Body.X = ghostOffset;
 			
 			//fire ze missiles
             if (gamePadState.Buttons.A == ButtonState.Pressed)
@@ -113,6 +114,5 @@ namespace Avocado
 			else
 				this.firing = false;
 		}
-
 	}
 }

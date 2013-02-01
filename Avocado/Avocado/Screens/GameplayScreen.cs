@@ -217,6 +217,15 @@ namespace Avocado
                     player.score = (int)Math.Ceiling(player.score / 2.0);
 					player.Position.X = 0;
 					player.Position.Y = bounds.Height / 2;
+					player.resetEnchants();
+					this.enchantments.ForEach(enchant =>
+					{
+						if (enchant.target == player)
+						{
+							enchant.duration = 0;
+						}
+
+					});
                     this.enchantments.Add(new GhostyEnchantment(player, 1000));
                 });
 			}

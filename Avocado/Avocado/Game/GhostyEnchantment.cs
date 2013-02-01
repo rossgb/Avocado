@@ -11,6 +11,7 @@
         {
             this.target.ghosty = true;
             this.target.Speed *= 1.3f;
+			this.target.ghostOffset = 400;
         }
     }
 }
