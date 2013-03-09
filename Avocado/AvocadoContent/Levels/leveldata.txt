@@ -1,0 +1,1 @@
+{"waves":[{"waveid":1,"timer":5000,"monsterid":1,"monster_num":5},{"waveid":2,"timer":2500,"monsterid":1,"monster_num":10}]}

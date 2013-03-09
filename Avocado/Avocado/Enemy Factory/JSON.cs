@@ -36,7 +36,7 @@ namespace Avocado
 		/// Parses the string json into a value
 		/// </summary>
 		/// <param name="json">A JSON string.</param>
-		/// <returns>An ArrayList, a Hashtable, a double, a string, null, true, or false</returns>
+		/// <returns>An ArrayList, a Hashtable, a float, a string, null, true, or false</returns>
 		public static object JsonDecode(string json)
 		{
 			bool success = true;
@@ -49,7 +49,7 @@ namespace Avocado
 		/// </summary>
 		/// <param name="json">A JSON string.</param>
 		/// <param name="success">Successful parse?</param>
-		/// <returns>An ArrayList, a Hashtable, a double, a string, null, true, or false</returns>
+		/// <returns>An ArrayList, a Hashtable, a float, a string, null, true, or false</returns>
 		public static object JsonDecode(string json, ref bool success)
 		{
 			success = true;
@@ -245,7 +245,7 @@ namespace Avocado
 			return s.ToString();
 		}
 
-		protected static double ParseNumber(char[] json, ref int index, ref bool success)
+		protected static float ParseNumber(char[] json, ref int index, ref bool success)
 		{
 			EatWhitespace(json, ref index);
 
@@ -254,9 +254,9 @@ namespace Avocado
 
 			double number;
 			success = Double.TryParse(new string(json, index, charLength), NumberStyles.Any, CultureInfo.InvariantCulture, out number);
-
+            float floatNum = (float)number;
 			index = lastIndex + 1;
-			return number;
+			return floatNum;
 		}
 
 		protected static int GetLastIndexOfNumber(char[] json, int index)
@@ -358,7 +358,7 @@ namespace Avocado
 		}
 
 
-		protected static bool SerializeNumber(double number, StringBuilder builder)
+		protected static bool SerializeNumber(float number, StringBuilder builder)
 		{
 			builder.Append(Convert.ToString(number, CultureInfo.InvariantCulture));
 			return true;

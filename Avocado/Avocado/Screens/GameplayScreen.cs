@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics; //REMOVE ME
@@ -6,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace Avocado
 {
@@ -78,7 +80,7 @@ namespace Avocado
 
 			this.entities.AddRange(this.players);
 
-			// Create scrolling enivronment for level.
+			// Create scrolling environment for level.
 			this.background = new ScrollingEnvironment(
 				this.content.Load<Texture2D>("Environment/background"), this.scrollVelocity,
 				this.ScreenManager.GraphicsDevice.Viewport.Width);
@@ -362,6 +364,17 @@ namespace Avocado
 
 		private void TempMakeEnemy() // TEMPORARY
 		{
+            
+            ArrayList levelStrings = new ArrayList();
+            using (StreamReader reader = new StreamReader("Content/Levels/leveldata.txt"))
+            {
+                string line = "failed";
+                while ((line = reader.ReadLine()) != null)
+                {
+                    levelStrings.Add(JSON.JsonDecode(line));
+                }
+            }
+            
 			//string = x y health speed
 			// TEMPORARY
 			for (int i = 1500; i < 50000; i += 350)

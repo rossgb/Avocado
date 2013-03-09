@@ -26,7 +26,6 @@ namespace Avocado
 			Enemy nextEnemy = new Enemy(texture,new Vector2(x,y),health,speed);
 			nextEnemy.Radius = 50;
 			nextEnemy.Color = Color.White;
-            Debug.WriteLine("yay");
 			return nextEnemy;
 		}
 	}
